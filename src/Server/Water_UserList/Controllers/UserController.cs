@@ -24,7 +24,7 @@ namespace Water_UserList.Controllers
             var userCollectionName = "User";
             UserCollection = database.GetCollection<User>(userCollectionName);
         }
-
+        
         [HttpGet]
         public ActionResult<IEnumerable<User>> user()
         {
@@ -37,6 +37,13 @@ namespace Water_UserList.Controllers
         {
             var result = UserCollection.Find(it => it.CWT == CWT && it.TID == TID).ToList();
             return result;
+        }
+
+        [HttpPut]
+        public void insert_user([FromBody] User data)
+        {
+            data._id = Guid.NewGuid().ToString();
+            UserCollection.InsertOne(data);
         }
     }
 }

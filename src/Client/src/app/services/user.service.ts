@@ -11,7 +11,7 @@ export class UserService {
   url = 'http://35.231.173.183:8080';
 
   getAllUserData() {
-    let userdata: Promise<any> = axios.get("http://nsogroup1.azurewebsites.net" + "/user").then(response => response.data).catch(error => console.log(error));
+    let userdata: Promise<any> = axios.get("https://nsogroup1.azurewebsites.net" + "/user").then(response => response.data).catch(error => console.log(error));
     return userdata;
   }
 
@@ -36,7 +36,7 @@ export class UserService {
   insertUser(data: User) {
     if (this.validateData(data)) {
       let result: Promise<any> = 
-      axios.put( this.url+'/insert_user',JSON.parse(JSON.stringify(data))).then(response => response.data).catch(error => console.log(error));
+      axios.put('https://nsogroup1.azurewebsites.net'+'/insert_user',JSON.parse(JSON.stringify(data))).then(response => response.data).catch(error => console.log(error));
       return result;
     }
   }
