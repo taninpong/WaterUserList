@@ -1,0 +1,686 @@
+<div class="ui small header">ตรวจสอบความถูกต้อง</div>
+<!-- <tree-root [nodes]="nodes" [options]="options"></tree-root> -->
+<div style="margin:10px" *ngIf="sn1_select">
+    <div class="ui label">
+        สถานะการอนุมัติ
+    </div>
+    <ng-container>
+        <ng-container [ngSwitch]="sn1_select.status_approve">
+            <ng-container *ngSwitchCase=0>
+                รอตรวจ
+            </ng-container>
+            <ng-container *ngSwitchCase=1>
+                ต้องแก้ไข
+            </ng-container>
+            <ng-container *ngSwitchCase=2>
+                ผ่าน
+            </ng-container>
+        </ng-container>
+    </ng-container>
+    <div style="margin-left:10px" class="ui label">
+        สถานะข้อมูล
+    </div>
+    <ng-container>
+        <ng-container [ngSwitch]="sn1_select.status_data">
+            <ng-container *ngSwitchCase=0>
+                เริ่มสร้าง
+            </ng-container>
+            <ng-container *ngSwitchCase=1>
+                สมบูรณ์
+            </ng-container>
+            <ng-container *ngSwitchCase=2>
+                เจ้าหน้าที่ผู้ควบคุมตรวจสอบแล้ว
+            </ng-container>
+            <ng-container *ngSwitchCase=3>
+                สถิติจังหวัดอนุมัติแล้ว
+            </ng-container>
+        </ng-container>
+    </ng-container>
+</div>
+<sui-tabset>
+    <div class="ui top attached tabular menu">
+        <a class="item" suiTabHeader="1" (activate)="tab3 = false;tab2 = false">ส่วนที่ 1</a>
+        <a class="item" suiTabHeader="2" [isActive]="tab2" [isDisabled]="!sn1_select" (activate)="tab3 = false">ส่วนที่
+            2</a>
+        <a class="item" suiTabHeader="3" [isActive]="tab3" [isDisabled]="!sn1p3">ส่วนที่ 3</a>
+    </div>
+    <div class="ui segment" suiTabContent="1">
+        <a class="ui blue ribbon label">สน.1-1 (แบบนับจด) ส่วนที่ 1</a>
+        <button class="ui teal button" (click)="exportToExcel2()">ดาวน์โหลดโหลดข้อมูลผลการสำรวจทั้งหมด</button>
+        <div class="ui segments" id="container">
+            <table class="ui celled striped table">
+                <thead>
+                    <tr>
+                        <th>
+                            รหัสภาค
+                        </th>
+                        <th>
+                            ชื่อภาค
+                        </th>
+                        <th>
+                            รหัสจังหวัด
+                        </th>
+                        <th>
+                            ชื่อจังหวัด
+                        </th>
+                        <th>
+                            รหัสอำเภอ
+                        </th>
+                        <th>
+                            ชื่ออำเภอ
+                        </th>
+                        <th>
+                            รหัสตำบล
+                        </th>
+                        <th>
+                            ชื่อตำบล
+                        </th>
+                        <th>
+                            เขตการปกครอง
+                        </th>
+                        <th>
+                            รหัสเทศบาล
+                        </th>
+                        <th>
+                            ชื่อเทศบาล
+                        </th>
+                        <th>
+                            รหัส อบต.
+                        </th>
+                        <th>
+                            ชื่อ อบต.
+                        </th>
+                        <th>
+                            รหัส EA
+                        </th>
+                        <th>
+                            รหัสหมู่บ้าน
+                        </th>
+                        <th>
+                            ชื่อหมู่บ้าน
+                        </th>
+                        <th>
+                            นับจดวันที่
+                        </th>
+                        <th>
+                            รหัสเจ้าหน้าที่เก็บรวบรวมข้อมูล
+                        </th>
+                        <th>
+                            ตรวจรับวันที่
+                        </th>
+                        <th>
+                            รหัสเจ้าหน้าที่คุมงานสนาม
+                        </th>
+                        <th id="big_wrap" colspan="2">
+                            สน.1-1 (แบบนับจด) ส่วนที่ 2
+                        </th>
+                    </tr>
+                    <tr>
+                        <th>
+                            REG
+                        </th>
+                        <th>
+                            REG_NAME
+                        </th>
+                        <th>
+                            CWT
+                        </th>
+                        <th>
+                            CWT_NAME
+                        </th>
+                        <th>
+                            AMP
+                        </th>
+                        <th>
+                            AMP_NAME
+                        </th>
+                        <th>
+                            TAM
+                        </th>
+                        <th>
+                            TAM_NAME
+                        </th>
+                        <th>
+                            DISTRICT
+                        </th>
+                        <th>
+                            MUN
+                        </th>
+                        <th>
+                            MUN_NAME
+                        </th>
+                        <th>
+                            TAO
+                        </th>
+                        <th>
+                            TAO_NAME
+                        </th>
+                        <th>
+                            EA
+                        </th>
+                        <th>
+                            VIL
+                        </th>
+                        <th>
+                            VIL_NAME
+                        </th>
+                        <th>
+                            FI_DATE
+                        </th>
+                        <th>
+                            FI_ID
+                        </th>
+                        <th>
+                            FS_DATE
+                        </th>
+                        <th>
+                            FS_ID
+                        </th>
+                        <th id="big_wrap" colspan="2">
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <ng-container *ngFor="let sn1 of sn1p1">
+                        <tr [ngStyle]="{'background-color': validateSN1(sn1) ? 'white' :'#f9c7d0'}">
+                            <td>{{ sn1.SN1P1.REG }}</td>
+                            <td>{{ sn1.SN1P1.REG_NAME }}</td>
+                            <td>{{ sn1.SN1P1.CWT }}</td>
+                            <td>{{ sn1.SN1P1.CWT_NAME }}</td>
+                            <td>{{ sn1.SN1P1.AMP }}</td>
+                            <td>{{ sn1.SN1P1.AMP_NAME }}</td>
+                            <td>{{ sn1.SN1P1.TAM }}</td>
+                            <td>{{ sn1.SN1P1.TAM_NAME }}</td>
+                            <td>{{ sn1.SN1P1.DISTRICT }}</td>
+                            <td>{{ sn1.SN1P1.MUN }}</td>
+                            <td>{{ sn1.SN1P1.MUN_NAME }}</td>
+                            <td>{{ sn1.SN1P1.TAO }}</td>
+                            <td>{{ sn1.SN1P1.TAO_NAME }}</td>
+                            <td>{{ sn1.SN1P1.EA }}</td>
+                            <td>{{ sn1.SN1P1.VIL }}</td>
+                            <td>{{ sn1.SN1P1.VIL_NAME }}</td>
+                            <td></td>
+                            <td>{{ sn1.SN1P1.FI_ID }}</td>
+                            <td></td>
+                            <td>{{ sn1.SN1P1.FS_ID }}</td>
+                            <td id="big_wrap" colspan="2">
+                                <ng-container>
+                                    <button class="ui teal button" (click)="seemoreSN1P2(sn1)">ดูข้อมูล สน.1-1 (แบบนับจด) ส่วนที่ 2</button>
+                                </ng-container>
+                            </td>
+                        </tr>
+                    </ng-container>
+                </tbody>
+            </table>
+        </div>
+        <div class="ui segment" *ngIf="sn1_data != null">
+            <sui-pagination [collectionSize]="sn1_data.length" [pageSize]="25" [maxSize]="10" [hasEllipses]="true"
+                [(page)]="page1" (pageChange)="showPage1()">
+            </sui-pagination>
+        </div>
+    </div>
+    <div class="ui segment" suiTabContent="2">
+        <a class="ui blue ribbon label">สน.1-1 (แบบนับจด) ส่วนที่ 2</a>
+        <button class="ui teal button" (click)="exportToExcel()">ดาวน์โหลดโหลดข้อมูลผลการสำรวจรายอาคาร</button>
+        <div style="padding:10px" class="ui segments" id="container">
+            <table class="ui celled striped table">
+                <thead>
+                    <tr>
+                        <th>
+                            ลำดับที่บ้าน/อาคาร/สิ่งปลูกสร้าง
+                        </th>
+                        <th>
+                            ชื่อถนนลำน้ำ หรือละแวกบ้าน
+                        </th>
+                        <th>
+                            ชื่อตรอก/ซอย
+                        </th>
+                        <th>
+                            ชื่อหมู่บ้านคอนโด/อาคารสำนักงาน/สถานประกอบการ/สถาบัน ฯลฯ
+                        </th>
+                        <th>
+                            เลขที่บ้าน/อาคาร
+                        </th>
+                        <th>
+                            ละติจูด
+                        </th>
+                        <th>
+                            ลองติจูด
+                        </th>
+                        <th>
+                            ประเภทบ้าน/อาคาร/สิ่งปลูกสร้าง
+                        </th>
+                        <th>
+                            จำนวนบ้านว่าง/ร้าง
+                        </th>
+
+                        <th>
+                            ผลการเข้าพบ ครั้งที่ 1
+                        </th>
+                        <th>
+                            ผลการเข้าพบ ครั้งที่ 2
+                        </th>
+                        <th>
+                            ผลการเข้าพบ ครั้งที่ 3
+                        </th>
+                        <th>
+                            จำนวนครัวเรือน/สถานประกอบการรวมทั้งหมด ในบ้าน/อาคาร/สิ่งปลูกสร้าง
+                        </th>
+                        <th>
+                            การอนุญาติให้เข้าอาคาร
+                        </th>
+                        <th>
+                            จำนวนห้องว่าง
+                        </th>
+                        <th>
+                            จำนวนห้องที่มีผู้อาศัย/จำนวนสถานประกอบการ
+                        </th>
+                        <th>
+                            บันทึกปัญหา อุปสรรคการนัดหมาย เหตุผลที่นับจดไม่ได้
+                        </th>
+                        <th>
+                            เวลาเริ่มทำการสำรวจ
+                        </th>
+                        <th>
+                            เวลาที่บันทึกล่าสุด
+                        </th>
+                        <th>
+                            ระยะเวลาในการทำ (นาที)
+                        </th>
+                        <th>
+                            สถานะข้อมูล
+                        </th>
+                        <th id="big_wrap" colspan="2">
+                            สน.1-1 (แบบนับจด) ส่วนที่ 3
+                        </th>
+                    </tr>
+                    <tr>
+                        <th>
+                            A1
+                        </th>
+                        <th>
+                            A2
+                        </th>
+                        <th>
+                            A3
+                        </th>
+                        <th>
+                            A4
+                        </th>
+                        <th>
+                            A5
+                        </th>
+                        <th>
+                            A6
+                        </th>
+                        <th>
+                            A7
+                        </th>
+                        <th>
+                            A8
+                        </th>
+                        <th>
+                            A9
+                        </th>
+                        <th>
+                            H1-1
+                        </th>
+                        <th>
+                            H1-2
+                        </th>
+                        <th>
+                            H1-3
+                        </th>
+                        <th>
+                            N
+                        </th>
+                        <th>
+                            H1-4
+                        </th>
+                        <th>
+                            N0
+                        </th>
+                        <th>
+                            N1
+                        </th>
+                        <th>
+                            A11
+                        </th>
+                        <th id="big_wrap" colspan="5">
+
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <ng-container *ngIf="sn1_select">
+
+                        <tr *ngFor="let sn_select of sn1p2;let i = index" [ngStyle]="{'background-color': validateSN1P2(sn1_select.SN1P2[i]) ? 'white' :'#f9c7d0'}">
+                            <td>{{ sn_select.A1 }}</td>
+                            <td>{{ sn_select.A2 }}</td>
+                            <td>{{ sn_select.A3 }}</td>
+                            <td>{{ sn_select.A4 }}</td>
+                            <td>{{ sn_select.A5 }}</td>
+                            <td>{{ sn_select.A6 }}</td>
+                            <td>{{ sn_select.A7 }}</td>
+                            <td>{{ sn_select.A8 }}</td>
+                            <td>{{ sn_select.A9 }}</td>
+                            <td>
+                                <p *ngIf="sn_select.H1_1 == 1 ||sn_select.H1_1 == '1'">มีผู้ให้ข้อมูลให้ความร่วมมือ</p>
+                                <p *ngIf="sn_select.H1_1 == 2 ||sn_select.H1_1 == '2'">มีผู้ให้ข้อมูล แต่ไม่ให้ความร่วมมือ</p>
+                                <p *ngIf="sn_select.H1_1 == 3 ||sn_select.H1_1 == '3'">ไม่มี/ไม่พบผู้ให้ข้อมูล</p>
+                                <p *ngIf="sn_select.H1_1 == 4 ||sn_select.H1_1 == '4'">บ้าน/อาคาร ว่างหรือร้าง</p>
+                                <p *ngIf="!sn_select.H1_1"></p>
+                            </td>
+                            <td>
+                                <p *ngIf="sn_select.H1_2 == 1 ||sn_select.H1_2 == '1'">มีผู้ให้ข้อมูลให้ความร่วมมือ</p>
+                                <p *ngIf="sn_select.H1_2 == 2 ||sn_select.H1_2 == '2'">มีผู้ให้ข้อมูล แต่ไม่ให้ความร่วมมือ</p>
+                                <p *ngIf="sn_select.H1_2 == 3 ||sn_select.H1_2 == '3'">ไม่มี/ไม่พบผู้ให้ข้อมูล</p>
+                                <p *ngIf="sn_select.H1_2 == 4 ||sn_select.H1_2 == '4'">บ้าน/อาคาร ว่างหรือร้าง</p>
+                                <p *ngIf="!sn_select.H1_2"></p>
+                            </td>
+                            <td>
+                                <p *ngIf="sn_select.H1_3 == 1 ||sn_select.H1_3 == '1'">มีผู้ให้ข้อมูลให้ความร่วมมือ</p>
+                                <p *ngIf="sn_select.H1_3 == 2||sn_select.H1_3 == '2'">มีผู้ให้ข้อมูล แต่ไม่ให้ความร่วมมือ</p>
+                                <p *ngIf="sn_select.H1_3 == 3||sn_select.H1_3 == '3'">ไม่มี/ไม่พบผู้ให้ข้อมูล</p>
+                                <p *ngIf="sn_select.H1_3 == 4||sn_select.H1_3 == '4'">บ้าน/อาคาร ว่างหรือร้าง</p>
+                                <p *ngIf="!sn_select.H1_3"></p>
+                            </td>
+                            <td>{{ sn_select.N ? sn_select.N : '' }}</td>
+                            <td>{{ sn_select.H1_4 ? sn_select.H1_4 : '' }}</td>
+                            <td>{{ sn_select.N0 ? sn_select.N0 : '' }}</td>
+                            <td>{{ sn_select.N1? sn_select.N1 : '' }}</td>
+                            <td>
+                                <ng-container *ngIf="sn_select.P5 != null">
+                                    {{ sn_select.A11 ? sn_select.A11 : '' }}
+                                </ng-container>
+                            </td>
+                            <td>{{sn_select.Create_DATE_Display}}</td>
+                            <td>{{sn_select.Modify_DATE_Display}}</td>
+                            <td>{{sn_select.Duration_DATE_Display}}</td>
+                            <td>
+                                <ng-container [ngSwitch]="sn_select.status">
+                                    <ng-container *ngSwitchCase="0">
+                                        เริ่มสร้าง
+                                    </ng-container>
+                                    <ng-container *ngSwitchCase="1">
+                                        สำรวจครั้งที่ 1 ไม่พบ
+                                    </ng-container>
+                                    <ng-container *ngSwitchCase="2">
+                                        สำรวจครั้งที่ 2 ไม่พบ
+                                    </ng-container>
+                                    <ng-container *ngSwitchCase="3">
+                                        หยุดชั่วคราว
+                                    </ng-container>
+                                    <ng-container *ngSwitchCase="4">
+                                        สำรวจเสร็จสิ้น
+                                    </ng-container>
+                                    <ng-container *ngSwitchCase="5">
+                                        2-1 ไม่เสร็จ
+                                    </ng-container>
+                                    <ng-container *ngSwitchCase="6">
+                                        ส่งงานแล้ว
+                                    </ng-container>
+                                    <ng-container *ngSwitchCase="10">
+                                        รอแก้ไข
+                                    </ng-container>
+                                </ng-container>
+                            </td>
+                            <td id="big_wrap" colspan="2">
+                                <ng-container *ngIf="!sn_select.H3">
+                                    ไม่มีข้อมูล
+                                </ng-container>
+                                <ng-container *ngIf="sn_select.H3">
+                                    <button class="ui teal button" (click)="seemoreSN1P3(i,sn_select.H3)">ดูข้อมูล สน.1-1 (แบบนับจด) ส่วนที่ 3</button>
+                                </ng-container>
+                            </td>
+                        </tr>
+                    </ng-container>
+                </tbody>
+            </table>
+        </div>
+        <div class="ui segment" *ngIf="sn1_select != null">
+            <sui-pagination [collectionSize]="sn1_select.SN1P2.length" [pageSize]="25" [maxSize]="10" [hasEllipses]="true"
+                [(page)]="page2" (pageChange)="showPage2()">
+            </sui-pagination>
+        </div>
+        <div style="padding: 10px">
+            <button *ngIf="user && user.TID === '4'" class="ui blue button" (click)="comfirmEAComplete()">ยืนยันครบทั้ง
+                EA</button>
+        </div>
+    </div>
+    <div class="ui segment" suiTabContent="3">
+        <a class="ui blue ribbon label">สน.1-1 (แบบนับจด) ส่วนที่ 3</a>
+        <div style="padding:10px" class="ui segments" id="container">
+            <table class="ui celled striped table">
+                <thead>
+                    <tr>
+                        <th>
+                            ลำดับที่บ้าน/อาคาร/สิ่งปลูกสร้าง
+                        </th>
+                        <th>
+                            ลำดับครัวเรือน สถานประกอบการในอาคาร
+                        </th>
+                        <th>
+                            หมายเลขห้อง
+                        </th>
+                        <th>
+                            การบันทึกผลการเข้าพบ ครั้งที่ 1
+                        </th>
+                        <th>
+                            การบันทึกผลการเข้าพบ ครั้งที่ 2
+                        </th>
+                        <th>
+                            การบันทึกผลการเข้าพบ ครั้งที่ 3
+                        </th>
+                        <th>
+                            ใช้น้ำประปาหรือไม่
+                        </th>
+                        <th>
+                            มีมิเตอร์น้ำประปาแยกจากส่วนกลางหรือไม่
+                        </th>
+                        <th>
+                            ใช้น้ำบาดาลหรือไม่
+                        </th>
+                        <th>
+                            มีมิเตอร์น้ำบาดาลแยกจากส่วนกลางหรือไม่
+                        </th>
+                        <th>
+                            ใช้น้ำเพื่ออุปโภคบริโภค สถานที่นี้มีคนอาศัยอยู่หรือไม่
+                        </th>
+                        <th>
+                            ใช้น้ำเพื่อการเกษตร มีพื้นที่ปลูกพืชหรือทำการเกษตรหรือไม่
+                        </th>
+                        <th>
+                            ใช้น้ำเพื่อการผลิต ครัวเรือน/สถานประกอบการทำการผลิตหรือไม่
+                        </th>
+                        <th>
+                            ใช้น้ำเพื่อการบริการ ครัวเรือน/สถานประกอบการนี้ทำการบริการหรือไม่
+                        </th>
+                        <th>
+                            บันทึกปัญหา อุปสรรคการนัดหมาย เหตุผลที่นับจดไม่ได้
+                        </th>
+                        <th id="big_wrap" colspan="2">
+                            สน.1-2 (แบบแจงนับ)
+                        </th>
+                        <th id="big_wrap" colspan="2">
+                            ข้อเสนอแนะ
+                        </th>
+                        <th *ngIf="user && user.TID === '4'" id="big_wrap" colspan="2">
+                            อนุมัติงาน
+                        </th>
+                    </tr>
+                    <tr>
+                        <th>
+                            A1
+                        </th>
+                        <th>
+                            H3
+                        </th>
+                        <th>
+                            H4
+                        </th>
+                        <th>
+                            H5-1
+                        </th>
+                        <th>
+                            H5-2
+                        </th>
+                        <th>
+                            H5-3
+                        </th>
+                        <th>
+                            P1
+                        </th>
+                        <th>
+                            P2
+                        </th>
+                        <th>
+                            P3
+                        </th>
+                        <th>
+                            P4
+                        </th>
+                        <th>
+                            G1
+                        </th>
+                        <th>
+                            G2
+                        </th>
+                        <th>
+                            G3
+                        </th>
+                        <th>
+                            G4
+                        </th>
+                        <th>
+                            A11
+                        </th>
+                        <th id="big_wrap" colspan="2">
+
+                        </th>
+                        <th id="big_wrap" colspan="2">
+
+                        </th>
+                        <th *ngIf="user && user.TID === '4'" id="big_wrap" colspan="2">
+
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <ng-container *ngIf="sn1_select && p2_index >= 0">
+                        <tr *ngFor="let j of range(0,sn1_select.SN1P2[p2_index].H3.length)" [ngStyle]="{'background-color': validateSN1P3(sn1_select.SN1P2[p2_index],sn1_select.SN1P2[p2_index].H3[j]) ? 'white' :'#f9c7d0'}">
+                            <td>{{ sn1_select.SN1P2[p2_index].H3[j].A1 }}</td>
+                            <td>{{ sn1_select.SN1P2[p2_index].H3[j].H3 }}</td>
+                            <td>{{ sn1_select.SN1P2[p2_index].H3[j].H4 }}</td>
+                            <td>{{ sn1_select.SN1P2[p2_index].H3[j].H5_1 }}</td>
+                            <td>{{ sn1_select.SN1P2[p2_index].H3[j].H5_2 }}</td>
+                            <td>{{ sn1_select.SN1P2[p2_index].H3[j].H5_3 }}</td>
+                            <td>
+                                <ng-container *ngIf="sn1_select.SN1P2[p2_index].H3[j].P1 != null">
+                                    {{ sn1_select.SN1P2[p2_index].H3[j].P1 ? 'ใช้' : 'ไม่ใช้' }}
+                                </ng-container>
+                            </td>
+                            <td>
+                                <ng-container *ngIf="sn1_select.SN1P2[p2_index].H3[j].P2 != null">
+                                    {{ sn1_select.SN1P2[p2_index].H3[j].P2 ? 'ใช้' : 'ไม่ใช้' }}
+                                </ng-container>
+                            </td>
+                            <td>
+                                <ng-container *ngIf="sn1_select.SN1P2[p2_index].H3[j].P3 != null">
+                                    {{ sn1_select.SN1P2[p2_index].H3[j].P3 ? 'ใช้' : 'ไม่ใช้' }}
+                                </ng-container>
+                            </td>
+                            <td>
+                                <ng-container *ngIf="sn1_select.SN1P2[p2_index].H3[j].P4 != null">
+                                    {{ sn1_select.SN1P2[p2_index].H3[j].P4 ? 'ใช้' : 'ไม่ใช้' }}
+                                </ng-container>
+                            </td>
+                            <td>
+                                <ng-container *ngIf="sn1_select.SN1P2[p2_index].H3[j].G1 != null">
+                                    {{ sn1_select.SN1P2[p2_index].H3[j].G1 ? 'ใช่' : 'ไม่ใช่' }}
+                                </ng-container>
+                            </td>
+                            <td>
+                                <ng-container *ngIf="sn1_select.SN1P2[p2_index].H3[j].G2 != null">
+                                    {{ sn1_select.SN1P2[p2_index].H3[j].G2 ? 'ใช่' : 'ไม่ใช่' }}
+                                </ng-container>
+                            </td>
+                            <td>
+                                <ng-container *ngIf="sn1_select.SN1P2[p2_index].H3[j].G3 != null">
+                                    {{ sn1_select.SN1P2[p2_index].H3[j].G3 ? 'ใช่' : 'ไม่ใช่' }}
+                                </ng-container>
+                            </td>
+                            <td>
+                                <ng-container *ngIf="sn1_select.SN1P2[p2_index].H3[j].G4 != null">
+                                    {{ sn1_select.SN1P2[p2_index].H3[j].G4 ? 'ใช่' : 'ไม่ใช่' }}
+                                </ng-container>
+                            </td>
+                            <td>
+                                <ng-container *ngIf="sn1_select.SN1P2[p2_index].H3[j].G5 != null">
+                                    {{ sn1_select.SN1P2[p2_index].H3[j].A11 ? 'ใช่' : 'ไม่ใช่' }}
+                                </ng-container>
+                            </td>
+                            <td id="big_wrap" colspan="2">
+                                <button class="ui teal button" [disabled]="!sn1_select.SN1P2[p2_index].H3[j].SN2_1"
+                                    (click)="wc21Clicked(sn1_select.SN1P2[p2_index].H3[j],sn1_select.SN1P2[p2_index].H3[j].SN2_1)">ดูข้อมูล
+                                    สน.1-2 (แบบแจงนับ)</button>
+                            </td>
+                            <td id="big_wrap" colspan="2">
+                                <ng-container *ngIf="sn1_select.SN1P2[p2_index].H3[j].messages">
+                                    <button class="ui green button" [disabled]="!sn1_select.SN1P2[p2_index].H3[j].messages"
+                                        (click)="viewComment(p2_index,j)">ดูข้อเสนอแนะ</button>
+                                </ng-container>
+                                <ng-container *ngIf="!sn1_select.SN1P2[p2_index].H3[j].messages">
+                                    ไม่มีข้อมูล
+                                </ng-container>
+                            </td>
+                            <td *ngIf="user && user.TID === '4'" id="big_wrap" colspan="2">
+                                <button *ngIf="user && user.TID === '4'" class="ui green button" [disabled]="sn1_select.SN1P2[p2_index].H3[j].status != 4"
+                                    (click)="validatedButtonClicked(j)">ให้ผ่าน</button>
+                                <button *ngIf="user && user.TID === '4'" class="ui red button" [disabled]="sn1_select.SN1P2[p2_index].H3[j].status != 4"
+                                    (click)="reportFIButtonClicked(j)">ต้องแก้ไข</button>
+                            </td>
+                        </tr>
+                    </ng-container>
+                </tbody>
+            </table>
+        </div>
+        <div class="ui segment" *ngIf="sn1_select && p2_index >= 0">
+            <sui-pagination [collectionSize]="sn1_select.SN1P2[p2_index].H3.length" [pageSize]="25" [maxSize]="10"
+                [hasEllipses]="true" [(page)]="page3" (pageChange)="showPage3()">
+            </sui-pagination>
+        </div>
+    </div>
+</sui-tabset>
+<div class="ui segments">
+    <div style="padding:10px">
+        <button class="ui button" (click)="backButtonClicked()">กลับ</button>
+    </div>
+</div>
+<sui-modal [isClosable]="true" *ngIf="hasMassege" (dismissed)="hasMassege = false" #modal>
+    <div class="header">ข้อความถึงเจ้าหน้าที่</div>
+    <div style="width: 100%; height: 10em;" class="content">
+        <textarea style="width: 100%; height: 100%;" [(ngModel)]="message"></textarea>
+    </div>
+    <div class="actions">
+        <button class="ui green button" (click)="sendMassege()" autofocus>ส่งข้อความ</button>
+    </div>
+</sui-modal>
+<sui-modal [isClosable]="true" *ngIf="hasComment" (dismissed)="hasComment = false" #modal>
+    <div class="header">ข้อความ</div>
+    <div style="font-size: 1.2em" class="content">
+        <div class="ui divided selection list">
+            <a class="item">
+                <div class="ui horizontal label">ข้อความ</div>
+                {{comment.message}}
+            </a>
+            <a class="item">
+                <div class="ui horizontal label">เวลา</div>
+                {{comment.date}}
+            </a>
+        </div>
+    </div>
+    <div class="actions">
+        <button class="ui green button" (click)="modal.approve('done')" autofocus>ตกลง</button>
+    </div>
+</sui-modal>

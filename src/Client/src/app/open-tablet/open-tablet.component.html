@@ -1,0 +1,37 @@
+<form>
+  <h3 class="ui header">เปิดใช้งาน Tablet ให้เจ้าหน้าที่เก็บรวบรวมข้อมูล</h3>
+  <div style="padding:10px" class="ui segments">
+    <h4 class="ui header">
+      ระบุเจ้าหน้าที่เก็บรวบรวมข้อมูล ผู้รับผิดชอบเครื่อง Tablet
+      <div class="sub header">อีเมล์ เบอร์โทรศัพท์มือถือ หรือรหัสเจ้าหน้าที่เก็บรวบรวมข้อมูล</div>
+      <div style="padding:10px" class="ui input">
+        <input type="text" [(ngModel)]="user_data" name="user_data" #userData="ngModel" required>
+      </div>
+      <div class="ui left pointing red basic label" *ngIf="userData.invalid && (userData.dirty || userData.touched)">
+        <div  *ngIf="userData.errors.required">
+          กรุณาป้อน อีเมล์ เบอร์โทรศัพท์มือถือ หรือรหัสเจ้าหน้าที่เก็บรวบรวมข้อมูล
+      </div>
+      </div>
+    </h4>
+  </div>
+  <button class="ui primary button" (click)="createQRCode(); alert_flg = true;" >
+    สร้าง QR Code
+  </button>
+  <button class="ui green button" (click)="printTablet()" >
+    พิมพ์ใบส่งมอบ Tablet
+  </button>
+</form>
+<ng-template let-context let-modal="modal" #modalTemplate>
+  <div class="header">QR Code</div>
+  <div class="content" style="text-align:center">
+    <h4 *ngIf="!qr_data">ไม่พบข้อมูล</h4>
+    <qr-code *ngIf="qr_data" [(value)]="qr_data" [size]="150"></qr-code>
+    <p *ngIf="qr_data"> {{search_user.USERID}} : {{search_user.FIRSTNAME}} {{search_user.LASTNAME}}</p>
+    <p *ngIf="qr_data"> รหัสผ่าน: {{search_user.PASSWORD}}</p>
+  </div>
+  <div class="actions">
+      <button class="ui green button" (click)="modal.approve('approved')" autofocus>OK</button>
+  </div>
+</ng-template>
+
+

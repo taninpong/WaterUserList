@@ -1,0 +1,230 @@
+
+export interface PumpData {
+    power:number;
+    type:string;
+    horsepower:string;
+    pipe_con:string;
+    pipe_send:string;
+    water:number;
+}
+
+function convertData(data : any){
+    let result = []
+    let d = ''
+    for(let i=0;i<data.length;i++){
+        d = data[i].horsepower.split(' (')
+        if(d.length === 2){
+            let d1 = d[1].split(')')[0]
+            if(d1.indexOf('/') >= 0){
+                let num = []
+                num = d1.split('/')
+                data[i].horsepower = (Number(num[0])/Number(num[1])).toFixed(2) + " / " + d[0]
+            }else{
+                data[i].horsepower = d1 + " / " + d[0]
+            }
+        }else{
+            if(d[0].indexOf('(') >= 0){
+                data[i].horsepower = d[0].split(')')[0].split('(')[1] +  " / ไม่มี"
+            }else if(d[0] === 'ไม่ระบุ'){
+                data[i].horsepower = 'ไม่มี / ไม่มี'
+            }else{
+                data[i].horsepower = 'ไม่มี / ' + d[0]
+            }
+        }
+        result.push(data[i])
+    }
+    return result
+}
+
+
+export const EX_PUMP_BADAN_LIST: PumpData[] = convertData([
+    {power:1, type:'ปั๊มซับเมิร์ส/ปั๊มแบบจุ่ม', horsepower:'370 (1/2)', pipe_send:'1', pipe_con: 'ไม่ระบุ', water:30},
+    {power:1, type:'ปั๊มซับเมิร์ส/ปั๊มแบบจุ่ม', horsepower:'370 (1/2)', pipe_send:'1 (1/4)', pipe_con: 'ไม่ระบุ', water:40},
+    {power:1, type:'ปั๊มซับเมิร์ส/ปั๊มแบบจุ่ม', horsepower:'370 (1/2)', pipe_send:'1 (1/2)', pipe_con: 'ไม่ระบุ', water:50},
+    {power:1, type:'ปั๊มซับเมิร์ส/ปั๊มแบบจุ่ม', horsepower:'750 (1)', pipe_send:'1 (1/4)', pipe_con: 'ไม่ระบุ', water:50},
+    {power:1, type:'ปั๊มซับเมิร์ส/ปั๊มแบบจุ่ม', horsepower:'750 (1)', pipe_send:'1 (1/2)', pipe_con: 'ไม่ระบุ', water:60},
+    {power:1, type:'ปั๊มซับเมิร์ส/ปั๊มแบบจุ่ม', horsepower:'1100 (1.5)', pipe_send:'1 (1/4)', pipe_con: 'ไม่ระบุ', water:70},
+    {power:1, type:'ปั๊มซับเมิร์ส/ปั๊มแบบจุ่ม', horsepower:'1100 (1.5)', pipe_send:'2', pipe_con: 'ไม่ระบุ', water:80},
+    {power:1, type:'ปั๊มซับเมิร์ส/ปั๊มแบบจุ่ม', horsepower:'1500 (2)', pipe_send:'1 (1/4)', pipe_con: 'ไม่ระบุ', water:80},
+    {power:1, type:'ปั๊มซับเมิร์ส/ปั๊มแบบจุ่ม', horsepower:'1500 (2)', pipe_send:'2', pipe_con: 'ไม่ระบุ', water:120},
+    {power:1, type:'ปั๊มซับเมิร์ส/ปั๊มแบบจุ่ม', horsepower:'2200 (3)', pipe_send:'2', pipe_con: 'ไม่ระบุ', water:150},
+    {power:1, type:'ปั๊มซับเมิร์ส/ปั๊มแบบจุ่ม', horsepower:'3700 (5)', pipe_send:'2-3',pipe_con: 'ไม่ระบุ', water:250},
+    {power:1, type:'ปั๊มซับเมิร์ส/ปั๊มแบบจุ่ม', horsepower:'5500 (7.5)', pipe_send:'3',pipe_con: 'ไม่ระบุ', water:320},
+    {power:1, type:'ปั๊มซับเมิร์ส/ปั๊มแบบจุ่ม', horsepower:'7500 (10)', pipe_send:'3',pipe_con: 'ไม่ระบุ', water:400},
+    {power:1, type:'ปั๊มซับเมิร์ส/ปั๊มแบบจุ่ม', horsepower:'11000 (15)', pipe_send:'3',pipe_con: 'ไม่ระบุ', water:500},
+    {power:1, type:'ปั๊มซับเมิร์ส/ปั๊มแบบจุ่ม', horsepower:'15000 (20)', pipe_send:'3',pipe_con: 'ไม่ระบุ', water:600},
+    {power:1, type:'ปั๊มซับเมิร์ส/ปั๊มแบบจุ่ม', horsepower:'55000-93000 (75-120)',pipe_con: 'ไม่ระบุ', pipe_send:'3', water:1300},
+    {power:1, type:'ปั๊มซับเมิร์ส/ปั๊มแบบจุ่ม', horsepower:'55000-93000 (125-150)', pipe_send:'3',pipe_con: 'ไม่ระบุ', water:1600},
+    {power:1, type:'ปั๊มเจ็ท/ ปั๊มน้ำอัตโนมัติสำหรับดูดน้ำลึก', horsepower:'250 (1/3)', pipe_send:'1',pipe_con: '1 (1/4)', water:15},
+    {power:1, type:'ปั๊มเจ็ท/ ปั๊มน้ำอัตโนมัติสำหรับดูดน้ำลึก', horsepower:'370 (0.5)', pipe_send:'1',pipe_con: '1 (1/4)', water:20},
+    {power:1, type:'ปั๊มเจ็ท/ ปั๊มน้ำอัตโนมัติสำหรับดูดน้ำลึก', horsepower:'750 (1)', pipe_send:'1',pipe_con: '1', water:30},
+    {power:1, type:'ปั๊มเจ็ท/ ปั๊มน้ำอัตโนมัติสำหรับดูดน้ำลึก', horsepower:'1100 (1.5)', pipe_send:'1',pipe_con: '1 (1/4)', water:40},
+    {power:1, type:'ปั๊มเจ็ท/ ปั๊มน้ำอัตโนมัติสำหรับดูดน้ำลึก', horsepower:'1500 (2)', pipe_send:'ไม่ระบุ',pipe_con: '1 (1/4)', water:50},
+    {power:1, type:'ปั๊มหอยโข่ง', horsepower:'370 (0.5)', pipe_send:'1',pipe_con: '1 (1/2)', water:60},
+    {power:1, type:'ปั๊มหอยโข่ง', horsepower:'590 (0.8)', pipe_send:'1',pipe_con: '1 (1/2)', water:75},
+    {power:1, type:'ปั๊มหอยโข่ง', horsepower:'750 (1)', pipe_send:'1',pipe_con: '1 (1/2)', water:90},
+    {power:1, type:'ปั๊มหอยโข่ง', horsepower:'1100 (1.5)', pipe_send:'1',pipe_con: '1 (1/2)', water:110},
+    {power:1, type:'ปั๊มหอยโข่ง', horsepower:'1500 (2)', pipe_send:'1',pipe_con: '1 (1/2)', water:130},
+    {power:1, type:'ปั๊มหอยโข่ง', horsepower:'2200 (3)', pipe_send:'1 (1/4)',pipe_con: '2', water:160},
+    {power:1, type:'ปั๊มหอยโข่ง', horsepower:'3000 (4)', pipe_send:'1 (1/4)',pipe_con: '2', water:200},
+    {power:1, type:'ปั๊มหอยโข่ง', horsepower:'4000 (5)', pipe_send:'1 (1/4)',pipe_con: '2', water:300},
+    {power:1, type:'ปั๊มหอยโข่ง', horsepower:'5500 (7.5)', pipe_send:'2',pipe_con: '2 (1/2)', water:450},
+    {power:1, type:'ปั๊มหอยโข่ง', horsepower:'7500 (10)', pipe_send:'2 (1/2)',pipe_con: '3', water:750},
+    {power:1, type:'ปั๊มหอยโข่ง', horsepower:'9200 (12.5)', pipe_send:'3',pipe_con: '4', water:1000},
+    {power:1, type:'ปั๊มหอยโข่ง', horsepower:'11000 (15)', pipe_send:'3',pipe_con: '4', water:1250},
+    {power:1, type:'ปั๊มหอยโข่ง', horsepower:'15000 (20)', pipe_send:'3',pipe_con: '4', water:1500},
+    {power:1, type:'ปั๊มหอยโข่ง', horsepower:'18750 (25)', pipe_send:'3',pipe_con: '4', water:1750},
+    {power:1, type:'ปั๊มหอยโข่ง', horsepower:'22500 (30)', pipe_send:'3',pipe_con: '4', water:2250},
+    {power:1, type:'ปั๊มหอยโข่ง', horsepower:'30000 (40)', pipe_send:'3',pipe_con: '4', water:3000},
+    {power:1, type:'ปั๊มหอยโข่ง', horsepower:'37500 (50)', pipe_send:'3',pipe_con: '4', water:3500},
+    {power:1, type:'ปั๊มชัก', horsepower:'180 (1/4)', pipe_send:'1',pipe_con: '1', water:25},
+    {power:1, type:'ปั๊มชัก', horsepower:'250 (1/3)', pipe_send:'1',pipe_con: '1', water:30},
+    {power:1, type:'ปั๊มชัก', horsepower:'370 (0.5)', pipe_send:'1',pipe_con: '1', water:40},
+    {power:1, type:'ปั๊มชัก', horsepower:'450 (0.6)', pipe_send:'1',pipe_con: '1', water:45},
+    {power:1, type:'ปั๊มชัก', horsepower:'650 (0.85)', pipe_send:'2',pipe_con: '2', water:55},
+    {power:1, type:'ปั๊มชัก', horsepower:'750 (1)', pipe_send:'2',pipe_con: '2', water:60},
+    {power:1, type:'ปั๊มชัก', horsepower:'1100 (1.5)', pipe_send:'2',pipe_con: '2', water:75},
+    {power:1, type:'ปั๊มชัก', horsepower:'1500 (2)', pipe_send:'2',pipe_con: '2', water:90},
+    {power:1, type:'ปั๊มชัก', horsepower:'2200 (3)', pipe_send:'3',pipe_con: '3', water:120},
+    {power:1, type:'ปั๊มชัก', horsepower:'3000 (4)', pipe_send:'3',pipe_con: '3', water:160},
+    {power:1, type:'ปั๊มชัก', horsepower:'4000 (5)', pipe_send:'3',pipe_con: '3', water:200},
+    {power:2, type:'ปั๊มหอยโข่ง', horsepower:'4000 (5)', pipe_send:'2',pipe_con: '2', water:500},
+    {power:2, type:'ปั๊มหอยโข่ง', horsepower:'4975 (6.5)', pipe_send:'3',pipe_con: '3', water:800},
+    {power:2, type:'ปั๊มหอยโข่ง', horsepower:'5250 (7)', pipe_send:'3',pipe_con: '3', water:900},
+    {power:2, type:'ปั๊มหอยโข่ง', horsepower:'6375 (8.5)', pipe_send:'4',pipe_con: '4', water:1200},
+    {power:2, type:'ปั๊มหอยโข่ง', horsepower:'7500 (10)', pipe_send:'4',pipe_con: '4', water:1500},
+    {power:2, type:'ปั๊มหอยโข่ง', horsepower:'8250 (11)', pipe_send:'6',pipe_con: '6', water:2000},
+    {power:2, type:'ปั๊มหอยโข่ง', horsepower:'9000 (12)', pipe_send:'6',pipe_con: '6', water:2200},
+    {power:2, type:'ปั๊มหอยโข่ง', horsepower:'11250 (15)', pipe_send:'6',pipe_con: '6', water:2600},
+    {power:2, type:'ปั๊มหอยโข่ง', horsepower:'13500 (18)', pipe_send:'6',pipe_con: '6', water:3000},
+    {power:2, type:'ปั๊มหอยโข่ง', horsepower:'18000 (24)', pipe_send:'6',pipe_con: '6', water:3500},
+    {power:2, type:'ปั๊มหอยโข่ง', horsepower:'22500 (30)', pipe_send:'6',pipe_con: '6', water:4000},
+    {power:2, type:'ปั๊มหอยโข่ง', horsepower:'37500 (50)', pipe_send:'8',pipe_con: '8', water:7300},
+    {power:2, type:'ปั๊มหอยโข่ง', horsepower:'45000 (60)', pipe_send:'8',pipe_con: '8', water:8500},
+    {power:2, type:'ปั๊มหอยโข่ง', horsepower:'56250 (75)', pipe_send:'8',pipe_con: '10', water:9500},
+    {power:2, type:'ปั๊มหอยโข่ง', horsepower:'67500 (90)', pipe_send:'10',pipe_con: '10', water:11000},
+    {power:2, type:'ปั๊มหอยโข่ง', horsepower:'90000 (120)', pipe_send:'12',pipe_con: '12', water:15000},
+    {power:2, type:'ปั๊มหอยโข่ง', horsepower:'112500 (150)', pipe_send:'12',pipe_con: '12', water:20000},
+    {power:3, type:'ปั๊มหอยโข่ง', horsepower:'(3.4)', pipe_send:'2',pipe_con: '2', water:2600},
+    {power:3, type:'ปั๊มหอยโข่ง', horsepower:'(4)', pipe_send:'2',pipe_con: '2', water:3000},
+    {power:3, type:'ปั๊มหอยโข่ง', horsepower:'(4.8)', pipe_send:'3',pipe_con: '3', water:3500},
+    {power:3, type:'ปั๊มหอยโข่ง', horsepower:'(5.5)', pipe_send:'2',pipe_con: '2', water:4000},
+    {power:3, type:'ปั๊มหอยโข่ง', horsepower:'(5.5)', pipe_send:'3',pipe_con: '3', water:7300},
+    {power:3, type:'ปั๊มหอยโข่ง', horsepower:'(6.5)', pipe_send:'2',pipe_con: '2', water:8500},
+    {power:3, type:'ปั๊มหอยโข่ง', horsepower:'(6.5)', pipe_send:'3',pipe_con: '3', water:9500},
+    {power:3, type:'ปั๊มหอยโข่ง', horsepower:'(8)', pipe_send:'4',pipe_con: '4', water:11000},
+    {power:3, type:'ปั๊มหอยโข่ง', horsepower:'(9)', pipe_send:'4',pipe_con: '4', water:15000},
+    {power:3, type:'ปั๊มหอยโข่ง', horsepower:'(13)', pipe_send:'4',pipe_con: '4', water:20000},
+    {power:4, type:'ปั๊มหอยโข่ง', horsepower:'(7.5)', pipe_send:'2',pipe_con: '2', water:2600},
+    {power:4, type:'ปั๊มหอยโข่ง', horsepower:'(8)', pipe_send:'2',pipe_con: '2', water:3000},
+    {power:4, type:'ปั๊มหอยโข่ง', horsepower:'(8.5)', pipe_send:'2',pipe_con: '2', water:3500},
+    {power:4, type:'ปั๊มหอยโข่ง', horsepower:'(9)', pipe_send:'2',pipe_con: '2', water:4000},
+    {power:4, type:'ปั๊มหอยโข่ง', horsepower:'(9.5)', pipe_send:'2',pipe_con: '2', water:7300},
+    {power:4, type:'ปั๊มหอยโข่ง', horsepower:'(10)', pipe_send:'2',pipe_con: '2', water:8500},
+    {power:4, type:'ปั๊มหอยโข่ง', horsepower:'(10.5)', pipe_send:'2',pipe_con: '2', water:9500},
+    {power:4, type:'ปั๊มหอยโข่ง', horsepower:'(11)', pipe_send:'2',pipe_con: '2', water:11000},
+    {power:4, type:'ปั๊มหอยโข่ง', horsepower:'(11.5)', pipe_send:'2',pipe_con: '2', water:15000},
+    {power:4, type:'ปั๊มหอยโข่ง', horsepower:'(12)', pipe_send:'2',pipe_con: '2', water:20000},
+    {power:4, type:'ปั๊มหอยโข่ง', horsepower:'(12.5)', pipe_send:'2',pipe_con: '2', water:11000},
+    {power:4, type:'ปั๊มหอยโข่ง', horsepower:'(14)', pipe_send:'2',pipe_con: '2', water:15000},
+    {power:4, type:'ปั๊มหอยโข่ง', horsepower:'(15.5)', pipe_send:'2',pipe_con: '2', water:20000},
+    {power:4, type:'ปั๊มหอยโข่ง', horsepower:'(16)', pipe_send:'2',pipe_con: '2', water:20000},
+    {power:4, type:'ปั๊มเจ็ท', horsepower:'(7.5-16)', pipe_send:'1',pipe_con: '1', water:40},
+    {power:4, type:'เทอร์ไบร์', horsepower:'(5)', pipe_send:'4',pipe_con: 'ไม่ระบุ', water:200},
+    {power:4, type:'เทอร์ไบร์', horsepower:'(6)', pipe_send:'4',pipe_con: 'ไม่ระบุ', water:300},
+    {power:4, type:'เทอร์ไบร์', horsepower:'(7.5)', pipe_send:'4',pipe_con: 'ไม่ระบุ', water:450},
+    {power:4, type:'เทอร์ไบร์', horsepower:'(10)', pipe_send:'4',pipe_con: 'ไม่ระบุ', water:600},
+    {power:4, type:'เทอร์ไบร์', horsepower:'(12)', pipe_send:'4',pipe_con: 'ไม่ระบุ', water:800},
+    {power:5, type:'ปั๊มน้ำแบบโยก', horsepower:'ไม่ระบุ', pipe_send:'ไม่ระบุ',pipe_con: 'ไม่ระบุ', water:30}
+]);
+
+export const EX_PUMP_GROUND_LIST: PumpData[] = convertData([
+    {power:1, type:'ปั๊มไดโว่/ปั๊มจุ่ม/ปั๊มแช่', horsepower:'65 (0.1)', pipe_con:'ไม่ระบุ', pipe_send:'1', water:40},
+    {power:1, type:'ปั๊มไดโว่/ปั๊มจุ่ม/ปั๊มแช่', horsepower:'90 (0.12)', pipe_con:'ไม่ระบุ', pipe_send:'1', water:55},
+    {power:1, type:'ปั๊มไดโว่/ปั๊มจุ่ม/ปั๊มแช่', horsepower:'100 (0.13)', pipe_con:'ไม่ระบุ', pipe_send:'1', water:60},
+    {power:1, type:'ปั๊มไดโว่/ปั๊มจุ่ม/ปั๊มแช่', horsepower:'120 (0.16)', pipe_con:'ไม่ระบุ', pipe_send:'1', water:85},
+    {power:1, type:'ปั๊มไดโว่/ปั๊มจุ่ม/ปั๊มแช่', horsepower:'200 (0.26)', pipe_con:'ไม่ระบุ', pipe_send:'1', water:95},
+    {power:1, type:'ปั๊มไดโว่/ปั๊มจุ่ม/ปั๊มแช่', horsepower:'250 (0.33)', pipe_con:'ไม่ระบุ', pipe_send:'1', water:100},
+    {power:1, type:'ปั๊มไดโว่/ปั๊มจุ่ม/ปั๊มแช่', horsepower:'250 (0.33)', pipe_con:'ไม่ระบุ', pipe_send:'1 (1/2)', water:190},
+    {power:1, type:'ปั๊มไดโว่/ปั๊มจุ่ม/ปั๊มแช่', horsepower:'370 (0.5)', pipe_con:'ไม่ระบุ', pipe_send:'1', water:120},
+    {power:1, type:'ปั๊มไดโว่/ปั๊มจุ่ม/ปั๊มแช่', horsepower:'400 (0.55)', pipe_con:'ไม่ระบุ', pipe_send:'2', water:200},
+    {power:1, type:'ปั๊มไดโว่/ปั๊มจุ่ม/ปั๊มแช่', horsepower:'500 (0.65)', pipe_con:'ไม่ระบุ', pipe_send:'2', water:230},
+    {power:1, type:'ปั๊มไดโว่/ปั๊มจุ่ม/ปั๊มแช่', horsepower:'550 (0.73)', pipe_con:'ไม่ระบุ', pipe_send:'1 (1/2)', water:200},
+    {power:1, type:'ปั๊มไดโว่/ปั๊มจุ่ม/ปั๊มแช่', horsepower:'750 (1)', pipe_con:'ไม่ระบุ', pipe_send:'2', water:250},
+    {power:1, type:'ปั๊มไดโว่/ปั๊มจุ่ม/ปั๊มแช่', horsepower:'750 (1)', pipe_con:'ไม่ระบุ', pipe_send:'3', water:310},
+    {power:1, type:'ปั๊มไดโว่/ปั๊มจุ่ม/ปั๊มแช่', horsepower:'1100 (1.5)', pipe_con:'ไม่ระบุ', pipe_send:'2', water:300},
+    {power:1, type:'ปั๊มไดโว่/ปั๊มจุ่ม/ปั๊มแช่', horsepower:'1100 (1.5)', pipe_con:'ไม่ระบุ', pipe_send:'3', water:350},
+    {power:1, type:'ปั๊มไดโว่/ปั๊มจุ่ม/ปั๊มแช่', horsepower:'1300 (1.75)', pipe_con:'ไม่ระบุ', pipe_send:'2', water:360},
+    {power:1, type:'ปั๊มไดโว่/ปั๊มจุ่ม/ปั๊มแช่', horsepower:'1500 (2)', pipe_con:'ไม่ระบุ', pipe_send:'3', water:400},
+    {power:1, type:'ปั๊มน้ำอัตโนมัติ ถังกลม/ ถังเหลี่ยม', horsepower:'80', pipe_con:'1', pipe_send:'1', water:23},
+    {power:1, type:'ปั๊มน้ำอัตโนมัติ ถังกลม/ ถังเหลี่ยม', horsepower:'100', pipe_con:'1', pipe_send:'1', water:25},
+    {power:1, type:'ปั๊มน้ำอัตโนมัติ ถังกลม/ ถังเหลี่ยม', horsepower:'150', pipe_con:'1', pipe_send:'1', water:37},
+    {power:1, type:'ปั๊มน้ำอัตโนมัติ ถังกลม/ ถังเหลี่ยม', horsepower:'200', pipe_con:'1', pipe_send:'1', water:40},
+    {power:1, type:'ปั๊มน้ำอัตโนมัติ ถังกลม/ ถังเหลี่ยม', horsepower:'250', pipe_con:'1', pipe_send:'1', water:45},
+    {power:1, type:'ปั๊มน้ำอัตโนมัติ ถังกลม/ ถังเหลี่ยม', horsepower:'300', pipe_con:'1', pipe_send:'1', water:50},
+    {power:1, type:'ปั๊มน้ำอัตโนมัติ ถังกลม/ ถังเหลี่ยม', horsepower:'350', pipe_con:'1', pipe_send:'1', water:53},
+    {power:1, type:'ปั๊มน้ำอัตโนมัติ ถังกลม/ ถังเหลี่ยม', horsepower:'400', pipe_con:'1', pipe_send:'1', water:60},
+    {power:1, type:'ปั๊มน้ำอัตโนมัติ ถังกลม/ ถังเหลี่ยม', horsepower:'450', pipe_con:'1', pipe_send:'1', water:65},
+    {power:1, type:'ปั๊มน้ำอัตโนมัติ ถังกลม/ ถังเหลี่ยม', horsepower:'500', pipe_con:'1', pipe_send:'1', water:70},
+    {power:1, type:'ปั๊มน้ำอัตโนมัติ ถังกลม/ ถังเหลี่ยม', horsepower:'670', pipe_con:'1', pipe_send:'1', water:80},
+    {power:1, type:'ปั๊มน้ำอัตโนมัติ ถังกลม/ ถังเหลี่ยม', horsepower:'750', pipe_con:'1', pipe_send:'1', water:87},
+    {power:1, type:'ปั๊มน้ำอัตโนมัติ ถังกลม/ ถังเหลี่ยม', horsepower:'900', pipe_con:'1', pipe_send:'1', water:95},
+    {power:1, type:'ปั๊มหอยโข่ง', horsepower:'370 (0.5)', pipe_con:'1 (1/2)', pipe_send:'1', water:60},
+    {power:1, type:'ปั๊มหอยโข่ง', horsepower:'590 (0.8)', pipe_con:'1 (1/2)', pipe_send:'1', water:75},
+    {power:1, type:'ปั๊มหอยโข่ง', horsepower:'750 (1)', pipe_con:'1 (1/2)', pipe_send:'1', water:90},
+    {power:1, type:'ปั๊มหอยโข่ง', horsepower:'1100 (1.5)', pipe_con:'1 (1/2)', pipe_send:'1', water:110},
+    {power:1, type:'ปั๊มหอยโข่ง', horsepower:'1500 (2)', pipe_con:'1 (1/2)', pipe_send:'1', water:130},
+    {power:1, type:'ปั๊มหอยโข่ง', horsepower:'2200 (3)', pipe_con:'2', pipe_send:'1 (1/4)', water:160},
+    {power:1, type:'ปั๊มหอยโข่ง', horsepower:'3000 (4)', pipe_con:'2', pipe_send:'1 (1/4)', water:200},
+    {power:1, type:'ปั๊มหอยโข่ง', horsepower:'4000 (5)', pipe_con:'2', pipe_send:'1 (1/4)', water:300},
+    {power:1, type:'ปั๊มหอยโข่ง', horsepower:'5500 (7.5)', pipe_con:'2 (1/2)', pipe_send:'2', water:450},
+    {power:1, type:'ปั๊มหอยโข่ง', horsepower:'7500 (10)', pipe_con:'3', pipe_send:'2 (1/2)', water:750},
+    {power:1, type:'ปั๊มหอยโข่ง', horsepower:'9200 (12.5)', pipe_con:'4', pipe_send:'3', water:1000},
+    {power:1, type:'ปั๊มหอยโข่ง', horsepower:'11000 (15)', pipe_con:'4', pipe_send:'3', water:1250},
+    {power:1, type:'ปั๊มหอยโข่ง', horsepower:'15000 (20)', pipe_con:'4', pipe_send:'3', water:1500},
+    {power:1, type:'ปั๊มหอยโข่ง', horsepower:'18750 (25)', pipe_con:'4', pipe_send:'3', water:1750},
+    {power:1, type:'ปั๊มหอยโข่ง', horsepower:'22500 (30)', pipe_con:'4', pipe_send:'3', water:2250},
+    {power:1, type:'ปั๊มหอยโข่ง', horsepower:'30000 (40)', pipe_con:'4', pipe_send:'3', water:3000},
+    {power:1, type:'ปั๊มหอยโข่ง', horsepower:'37500 (50)', pipe_con:'4', pipe_send:'3', water:3500},
+    {power:2, type:'ปั๊มหอยโข่ง/ปั๊มพญานาค', horsepower:'4000 (5)', pipe_con:'2', pipe_send:'2', water:500},
+    {power:2, type:'ปั๊มหอยโข่ง/ปั๊มพญานาค', horsepower:'4875 (6.5)', pipe_con:'3', pipe_send:'3', water:800},
+    {power:2, type:'ปั๊มหอยโข่ง/ปั๊มพญานาค', horsepower:'5250 (7)', pipe_con:'3', pipe_send:'3', water:900},
+    {power:2, type:'ปั๊มหอยโข่ง/ปั๊มพญานาค', horsepower:'6375 (8.5)', pipe_con:'4', pipe_send:'4', water:1200},
+    {power:2, type:'ปั๊มหอยโข่ง/ปั๊มพญานาค', horsepower:'7500 (10)', pipe_con:'4', pipe_send:'4', water:1500},
+    {power:2, type:'ปั๊มหอยโข่ง/ปั๊มพญานาค', horsepower:'8250 (11)', pipe_con:'6', pipe_send:'6', water:2000},
+    {power:2, type:'ปั๊มหอยโข่ง/ปั๊มพญานาค', horsepower:'9000 (12)', pipe_con:'6', pipe_send:'6', water:2200},
+    {power:2, type:'ปั๊มหอยโข่ง/ปั๊มพญานาค', horsepower:'11250 (15)', pipe_con:'6', pipe_send:'6', water:2600},
+    {power:2, type:'ปั๊มหอยโข่ง/ปั๊มพญานาค', horsepower:'13500 (18)', pipe_con:'6', pipe_send:'6', water:3000},
+    {power:2, type:'ปั๊มหอยโข่ง/ปั๊มพญานาค', horsepower:'18000 (24)', pipe_con:'6', pipe_send:'6', water:3500},
+    {power:2, type:'ปั๊มหอยโข่ง/ปั๊มพญานาค', horsepower:'22500 (30)', pipe_con:'6', pipe_send:'6', water:4000},
+    {power:2, type:'ปั๊มหอยโข่ง/ปั๊มพญานาค', horsepower:'37500 (50)', pipe_con:'8', pipe_send:'8', water:7300},
+    {power:2, type:'ปั๊มหอยโข่ง/ปั๊มพญานาค', horsepower:'45000 (60)', pipe_con:'8', pipe_send:'8', water:8500},
+    {power:2, type:'ปั๊มหอยโข่ง/ปั๊มพญานาค', horsepower:'56250 (75)', pipe_con:'10', pipe_send:'8', water:9500},
+    {power:2, type:'ปั๊มหอยโข่ง/ปั๊มพญานาค', horsepower:'67500 (90)', pipe_con:'10', pipe_send:'10', water:11000},
+    {power:2, type:'ปั๊มหอยโข่ง/ปั๊มพญานาค', horsepower:'90000 (120)', pipe_con:'12', pipe_send:'12', water:15000},
+    {power:2, type:'ปั๊มหอยโข่ง/ปั๊มพญานาค', horsepower:'112500 (150)', pipe_con:'12', pipe_send:'12', water:20000},
+    {power:3, type:'ปั๊มหอยโข่ง/ปั๊มพญานาค', horsepower:'(3.4)', pipe_con:'2', pipe_send:'2', water:400},
+    {power:3, type:'ปั๊มหอยโข่ง/ปั๊มพญานาค', horsepower:'(4)', pipe_con:'2', pipe_send:'2', water:500},
+    {power:3, type:'ปั๊มหอยโข่ง/ปั๊มพญานาค', horsepower:'(4.8)', pipe_con:'3', pipe_send:'3', water:800},
+    {power:3, type:'ปั๊มหอยโข่ง/ปั๊มพญานาค', horsepower:'(5.5)', pipe_con:'2', pipe_send:'2', water:600},
+    {power:3, type:'ปั๊มหอยโข่ง/ปั๊มพญานาค', horsepower:'(5.5)', pipe_con:'3', pipe_send:'3', water:950},
+    {power:3, type:'ปั๊มหอยโข่ง/ปั๊มพญานาค', horsepower:'(6.5)', pipe_con:'2', pipe_send:'2', water:700},
+    {power:3, type:'ปั๊มหอยโข่ง/ปั๊มพญานาค', horsepower:'(6.5)', pipe_con:'3', pipe_send:'3', water:1100},
+    {power:3, type:'ปั๊มหอยโข่ง/ปั๊มพญานาค', horsepower:'(8)', pipe_con:'4', pipe_send:'4', water:1500},
+    {power:3, type:'ปั๊มหอยโข่ง/ปั๊มพญานาค', horsepower:'(9)', pipe_con:'4', pipe_send:'4', water:1600},
+    {power:3, type:'ปั๊มหอยโข่ง/ปั๊มพญานาค', horsepower:'(13)', pipe_con:'4', pipe_send:'4', water:1900},
+    {power:4, type:'ปั๊มหอยโข่ง/ปั๊มพญานาค', horsepower:'(7.5)', pipe_con:'2', pipe_send:'2', water:600},
+    {power:4, type:'ปั๊มหอยโข่ง/ปั๊มพญานาค', horsepower:'(8)', pipe_con:'2', pipe_send:'2', water:700},
+    {power:4, type:'ปั๊มหอยโข่ง/ปั๊มพญานาค', horsepower:'(8.5)', pipe_con:'2', pipe_send:'2', water:800},
+    {power:4, type:'ปั๊มหอยโข่ง/ปั๊มพญานาค', horsepower:'(9)', pipe_con:'2', pipe_send:'2', water:900},
+    {power:4, type:'ปั๊มหอยโข่ง/ปั๊มพญานาค', horsepower:'(9.5)', pipe_con:'2', pipe_send:'2', water:1000},
+    {power:4, type:'ปั๊มหอยโข่ง/ปั๊มพญานาค', horsepower:'(10)', pipe_con:'2', pipe_send:'2', water:1100},
+    {power:4, type:'ปั๊มหอยโข่ง/ปั๊มพญานาค', horsepower:'(10.5)', pipe_con:'2', pipe_send:'2', water:1200},
+    {power:4, type:'ปั๊มหอยโข่ง/ปั๊มพญานาค', horsepower:'(11)', pipe_con:'2', pipe_send:'2', water:1300},
+    {power:4, type:'ปั๊มหอยโข่ง/ปั๊มพญานาค', horsepower:'(11.5)', pipe_con:'2', pipe_send:'2', water:1400},
+    {power:4, type:'ปั๊มหอยโข่ง/ปั๊มพญานาค', horsepower:'(12)', pipe_con:'2', pipe_send:'2', water:1500},
+    {power:4, type:'ปั๊มหอยโข่ง/ปั๊มพญานาค', horsepower:'(12.5)', pipe_con:'2', pipe_send:'2', water:1600},
+    {power:4, type:'ปั๊มหอยโข่ง/ปั๊มพญานาค', horsepower:'(14)', pipe_con:'2', pipe_send:'2', water:2000},
+    {power:4, type:'ปั๊มหอยโข่ง/ปั๊มพญานาค', horsepower:'(15.5)', pipe_con:'2', pipe_send:'2', water:2300},
+    {power:4, type:'ปั๊มหอยโข่ง/ปั๊มพญานาค', horsepower:'(16)', pipe_con:'2', pipe_send:'2', water:2500},
+]);

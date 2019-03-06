@@ -1,0 +1,15 @@
+.progress {
+    margin-bottom: 0;
+    height: 20px;
+}
+
+.progress-bar {
+    height: 20px;
+    color: rgba(0,0,0,.6);
+    background-image: none;
+    font-weight: bold;
+}
+
+.label-progress-bar {
+    font-size: 16px; 
+}

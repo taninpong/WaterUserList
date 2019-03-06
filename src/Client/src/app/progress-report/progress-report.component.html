@@ -1,0 +1,171 @@
+<div class="ui segments">
+  <div class="ui segment">
+    <a class="ui blue ribbon label">เลือกเขตพื้นที่</a>
+  </div>
+  <div class="ui divided selection list">
+    <a class="item">
+      <div class="ui large label" style="margin-left: 10px">ภาค</div>
+      <sui-select style="margin: 10px" class="selection" [(ngModel)]="selected_reg" (ngModelChange)="regSelected()" isSearchable="true">
+        <sui-select-option *ngFor="let selected of reg_list" [value]="selected.name">
+        </sui-select-option>
+      </sui-select>
+
+      <div class="ui large label" style="margin-left: 10px">จังหวัด</div>
+      <sui-select style="margin: 10px" class="selection" [(ngModel)]="selected_cwt" (ngModelChange)="cwtSelected()" isSearchable="true">
+        <sui-select-option *ngFor="let selected of cwt_list" [value]="selected.name">
+        </sui-select-option>
+      </sui-select>
+      <div class="ui large label" style="margin-left: 10px">อำเภอ / เขต</div>
+      <sui-select style="margin: 10px" class="selection" [(ngModel)]="selected_amp" (ngModelChange)="ampSelected()" isSearchable="true">
+        <sui-select-option *ngFor="let selected of amp_list" [value]="selected.name">
+        </sui-select-option>
+      </sui-select>
+    </a>
+    <a class="item">
+      <div class="ui large label" style="margin-left: 10px">ตำบล / แขวง</div>
+      <sui-select style="margin: 10px" class="selection" [(ngModel)]="selected_tam" (ngModelChange)="tamSelected()" isSearchable="true">
+        <sui-select-option *ngFor="let selected of tam_list" [value]="selected.name">
+        </sui-select-option>
+      </sui-select>
+      <div class="ui large label" style="margin-left: 10px">เขตการปกครอง</div>
+      <sui-select style="margin: 10px" class="selection" [(ngModel)]="selected_dis" (ngModelChange)="disSelected()" isSearchable="true">
+        <sui-select-option *ngFor="let selected of dis_list" [value]="selected.name">
+        </sui-select-option>
+      </sui-select>
+      <div class="ui large label" style="margin-left: 10px">พื้นที่ย่อย</div>
+      <sui-select style="margin: 10px" class="selection" [(ngModel)]="selected_ea" (ngModelChange)="eaSelected()" isSearchable="true">
+        <sui-select-option *ngFor="let selected of ea_list" [value]="selected.name">
+        </sui-select-option>
+      </sui-select>
+    </a>
+  </div>
+</div>
+
+
+<div class="ui segments" *ngIf="summaryDisplay != null">
+  <div class="ui segment">
+    <ng-container *ngIf="summaryDisplay.id == 0">
+      <a class="ui blue ribbon label">ประเทศ</a>
+    </ng-container>
+    <ng-container *ngIf="summaryDisplay.id != 0">
+      <a class="ui blue ribbon label"> {{ summaryDisplay.name }}</a>
+    </ng-container>
+  </div>
+  <div class="container" id="summaryContent" #summaryContent>
+    <table style="margin-bottom: 20px" class="ui selectable vary basic celled striped table">
+      <thead>
+        <tr>
+          <th style="text-align: center;" scope="col">รหัส</th>
+          <th style="text-align: center;" scope="col">ชื่อ</th>
+          <th style="text-align: center;" scope="col" width="40%">กราฟความก้าวหน้า</th>
+          <th style="text-align: center;" scope="col">จำนวนความก้าวหน้า</th>
+          <ng-container *ngIf="selectedID.length == 6">
+            <th style="text-align: center;" scope="col">เจ้าหน้าที่ผู้ควบคุมงาน</th>
+          </ng-container>
+          <ng-container *ngIf="selectedID.length == 6">
+            <th style="text-align: center;" scope="col">เจ้าหน้าที่เก็บรวบรวมข้อมูล</th>
+          </ng-container>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th scope="row">{{ summaryDisplay.id }}</th>
+          <td>
+            <ng-container *ngIf="summaryDisplay.id == 0">
+              ประเทศ
+            </ng-container>
+            <ng-container *ngIf="summaryDisplay.id != 0">
+              {{ summaryDisplay.name }}
+            </ng-container>
+          </td>
+          <td rowspan="3">
+            <app-progress-bar-all [area]="summaryDisplay"></app-progress-bar-all>
+          </td>
+          <td>{{ summaryDisplay.complete }} / {{ summaryDisplay.total }} ครัวเรือน</td>
+          <td rowspan="3" *ngIf="selectedID.length == 6">{{summaryDisplay.fs}}</td>
+          <td rowspan="3" *ngIf="selectedID.length == 6">{{summaryDisplay.fi}}</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td></td>
+          <td>{{ summaryDisplay.complete_build }} / {{ summaryDisplay.total_build }} อาคาร</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td></td>
+          <td>{{ summaryDisplay.complete_ea }} / {{ summaryDisplay.total_ea }} เขตแจงนับ</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+<div class="ui segments">
+  <div class="ui segment">
+    <a class="ui blue ribbon label">ความก้าวหน้าของงาน</a>
+  </div>
+  <div class="container" *ngIf="displayData.length !== 0; else noData" id="tableContent" #tableContent>
+    <table class="ui selectable vary basic celled striped table">
+      <thead>
+        <tr>
+          <th style="text-align: center;" scope="col">รหัส</th>
+          <th style="text-align: center;" scope="col">ชื่อ</th>
+          <th style="text-align: center;" scope="col" width="40%">กราฟความก้าวหน้า</th>
+          <th style="text-align: center;" scope="col">จำนวนความก้าวหน้า</th>
+          <ng-container *ngIf="selectedID.length >= 5">
+            <th style="text-align: center;" scope="col">เจ้าหน้าที่ผู้ควบคุมงาน</th>
+          </ng-container>
+          <ng-container *ngIf="selectedID.length >= 5">
+            <th style="text-align: center;" scope="col">เจ้าหน้าที่เก็บรวบรวมข้อมูล</th>
+          </ng-container>
+        </tr>
+      </thead>
+      <tbody>
+        <ng-container style="margin-top: 10px" *ngFor="let ea of ea_list2">
+          <tr (click)="tableSelected(ea)">
+            <th scope="row">{{ ea.id }}</th>
+            <td>{{ ea.name }}</td>
+            <td rowspan="3">
+              <app-progress-bar-all [area]="ea"></app-progress-bar-all>
+            </td>
+            <td>{{ ea.complete }} / {{ ea.total }} ครัวเรือน</td>
+            <td rowspan="3" *ngIf="selectedID.length >= 5">{{ea.fs}}</td>
+            <td rowspan="3" *ngIf="selectedID.length >= 5">{{ea.fi}}</td>
+          </tr>
+          <tr>
+            <td></td>
+            <td></td>
+            <td>{{ ea.complete_build }} / {{ ea.total_build }} อาคาร</td>
+          </tr>
+          <tr>
+            <td></td>
+            <td></td>
+            <td> {{ ea.complete_ea }} / {{ ea.total_ea }} เขตแจงนับ</td>
+          </tr>
+        </ng-container>
+      </tbody>
+    </table>
+      
+    <div class="ui segment">
+      <sui-pagination [collectionSize]="displayData.length" [pageSize]="25" [maxSize]="10" [hasEllipses]="true" [(page)]="page"
+          (pageChange)="showPage()">
+        </sui-pagination>
+    </div>
+    <b>*หมายเหตุ</b> สีแดง หมายถึง ความคืบหน้า 0 - 25 %
+    <br>สีเหลือง หมายถึง ความคืบหน้า 26 - 75 %
+    <br>สีเขียว หมายถึง ความคืบหน้า 76 - 100 % %
+  </div>
+  
+</div>
+<div class="row justify-content-center">
+  <button class="btn btn-light" (click)="back()" [disabled]="selectedID.length == 0">ย้อนกลับ</button>
+  <button class="btn btn-danger" (click)="home()" [disabled]="selectedID.length == 0">กลับสู่หน้าแรก</button>
+  <button class="btn btn-info" (click)="print()">Export to PDF</button>
+  <button class="btn btn-success" (click)="exportToExcel()">Export to Excel</button>
+  <button class="btn btn-primary" (click)="print()">พิมพ์</button>
+</div>
+
+<ng-template #noData>
+  <div class="ui segments">
+    <h5 style="margin:10px; text-align: center;">ไม่พบข้อมูล</h5>
+  </div>
+</ng-template>

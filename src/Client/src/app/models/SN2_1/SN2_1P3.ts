@@ -1,0 +1,26 @@
+export class SN2_1P3 {
+    status:number;
+    A3_1:string;
+    A3_2_1:string;
+    A3_2_2:string;
+    A3_2_3:string;
+    A3_2_4:string;
+    A3_3_1:string;
+    A3_3_2:string;
+    A3_4:string;
+    A3_5:string;
+    A3_6:number;
+    A3_7:boolean
+    A3_8_1?:boolean;
+    A3_8_2?:boolean;
+    A3_8_3?:boolean;
+    A3_8_4?:boolean;
+    A3_8_5?:boolean;
+    A3_8_6?:boolean;
+    A3_8_7?:boolean;
+    A3_8_8?:boolean;
+    A3_8_8_1?:string;
+    A3_9:boolean;
+    A3_10:boolean;
+    A3_11:boolean;
+}

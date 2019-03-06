@@ -1,0 +1,24 @@
+export class SN2_1P1 {
+    status:number;
+    A1_1:string;
+    A1_2:number;
+    A1_2_1:number;
+    A1_2_2:number;
+    A1_2_3:number;
+    A1_2_4:number;
+    A1_2_5:number;
+    A1_2_6:number;
+    A1_2_7:number;
+    A1_2_8:number;
+    A1_2_9:number;
+    A1_3:boolean;
+    A1_4_1:boolean;
+    A1_4_2:boolean;
+    A1_4_3:boolean;
+    A1_4_4:boolean;
+    A1_4_5:boolean;
+    A1_4_6:boolean;
+    A1_4_7:boolean;
+    A1_4_8:boolean;
+    A1_4_8_1?:string;
+}

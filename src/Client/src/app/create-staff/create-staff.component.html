@@ -1,0 +1,196 @@
+<form>
+  <h3 class="ui header">เพิ่มข้อมูลเจ้าหน้าที่</h3>
+  <!-- <div class="ui segments">
+    <div class="ui raised segment">
+      <a class="ui black ribbon label">รูปเจ้าหน้าที่</a>
+      <input name="file_img" type="file" multiple accept="image/*" style="margin: 10px" (change)="createImage(file.files)" id="file"
+        #file>
+      <div class="ui small image" *ngIf="imageSrc">
+        <img src="{{imageSrc}}">
+      </div>
+    </div>
+  </div> -->
+  <div class="ui segments">
+    <div class="ui divided selection list">
+      <a class="item">
+        <div class="ui large label" style="margin-left: 10px">จังหวัด</div>
+        <sui-select style="margin: 10px" class="selection" [(ngModel)]="selected_cwt" (ngModelChange)="onSelectCwt()" isSearchable="true"
+          name="cwt" #cwt="ngModel" required>
+          <sui-select-option *ngFor="let selected_cwt of cwt_list" [value]="selected_cwt.name">
+          </sui-select-option>
+        </sui-select>
+        <div class="ui left pointing red basic label" *ngIf="cwt.invalid && (cwt.dirty || cwt.touched)">
+          <div *ngIf="cwt.errors.required">
+            กรุณาเลือกจังหวัด
+          </div>
+        </div>
+        <div class="ui large label" style="margin-left: 10px">ประเภทผู้ใช้</div>
+        <sui-select style="margin: 10px" class="selection" [(ngModel)]="selected_role" (ngModelChange)="onSelectRole()" isSearchable="true"
+          name="role" #role="ngModel" required>
+          <sui-select-option *ngFor="let selected_role of role_list" [value]="selected_role">
+          </sui-select-option>
+        </sui-select>
+        <div class="ui left pointing red basic label" *ngIf="role.invalid && (role.dirty || role.touched)">
+          <div *ngIf="role.errors.required">
+            กรุณาเลือกสิทธิ์ผู้ใช้
+          </div>
+        </div>
+      </a>
+      <a class="item">
+        <!-- <div class="ui large label">รหัสพนักงาน</div>{{user.USERID}} -->
+        <div class="ui large label" style="margin-left: 10px">คำนำหน้า</div>
+        <div class="ui input">
+          <input type="text" [(ngModel)]="user.TITLE" name="title" #title="ngModel" required maxlength="20">
+        </div>
+        <div class="ui left pointing red basic label" *ngIf="title.invalid && (title.dirty || title.touched)">
+          <div *ngIf="title.errors.required">
+            กรุณาป้อน คำนำหน้า
+          </div>
+          <div *ngIf="title.errors.maxlength">
+            คำนำหน้าไม่เกิน 20 ตัวอักษร
+          </div>
+        </div>
+        <div class="ui large label" style="margin-left: 10px">ชื่อ</div>
+        <div class="ui input">
+          <input type="text" [(ngModel)]="user.FIRSTNAME" name="firstname" #firstname="ngModel" required maxlength="50">
+        </div>
+        <div class="ui left pointing red basic label" *ngIf="firstname.invalid && (firstname.dirty || firstname.touched)">
+          <div *ngIf="firstname.errors.required">
+            กรุณาป้อนชื่อจริง
+          </div>
+          <div *ngIf="firstname.errors.maxlength">
+            ชื่อจริงไม่เกิน 50 ตัวอักษร
+          </div>
+        </div>
+        <div class="ui large label" style="margin-left: 10px">สกุล</div>
+        <div class="ui input">
+          <input type="text" [(ngModel)]="user.LASTNAME" name="lastname" #lastname="ngModel" required maxlength="50">
+        </div>
+        <div class="ui left pointing red basic label" *ngIf="lastname.invalid && (lastname.dirty || lastname.touched)">
+          <div *ngIf="lastname.errors.required">
+            กรุณาป้อนนามสกุล
+          </div>
+          <div *ngIf="lastname.errors.maxlength">
+            นามสกุลไม่เกิน 50 ตัวอักษร
+          </div>
+        </div>
+      </a>
+      <a class="item">
+        <div class="ui large label" style="margin-left: 10px">เลขบัตรประชาชน</div>
+        <div class="ui input">
+          <input type="text" pattern="^[0-9]{13,13}$" [(ngModel)]="user.SSN" name="ssn" #ssn="ngModel" required maxlength="13">
+        </div>
+        <div class="ui left pointing red basic label" *ngIf="ssn.invalid && (ssn.dirty || ssn.touched)">
+          <div *ngIf="ssn.errors.required">
+            กรุณาป้อนหมายเลขบัตรประชาชน
+          </div>
+          <div *ngIf="ssn.invalid">
+            กรุณาป้อนหมายเลขบัตรประชาชนให้ถูกต้อง
+          </div>
+          <div *ngIf="ssn.errors.maxlength">
+            หมายเลขบัตรประชาชนไม่เกิน 13 ตัวอักษร
+          </div>
+        </div>
+      </a>
+      <a class="item">
+        <div class="ui large label" style="margin-left: 10px">อีเมล์</div>
+        <div class="ui input">
+          <input type="email" pattern="^[^\s@]+@[^\s@]+\.[^\s@]{2,}$" [(ngModel)]="user.EMAIL" name="email" #email="ngModel"
+            maxlength="50">
+        </div>
+        <div class="ui left pointing red basic label" *ngIf="email.invalid && (email.dirty || email.touched)">
+          <div *ngIf="email.invalid">
+            กรุณาป้อนอีเมล์ให้ถูกต้อง
+          </div>
+          <div *ngIf="email.errors.maxlength">
+            อีเมล์ไม่เกิน 50 ตัวอักษร
+          </div>
+        </div>
+        <div class="ui large label" style="margin-left: 10px">เบอร์โทรศัพท์มือถือ</div>
+        <div class="ui input">
+          <input type="text" pattern="^0[0-9]{9,10}$" [(ngModel)]="user.PHONE" name="telephone" #telephone="ngModel" maxlength="15">
+        </div>
+        <div class="ui left pointing red basic label" *ngIf="telephone.invalid && (telephone.dirty || telephone.touched)">
+          <div *ngIf="telephone.invalid">
+            กรุณาป้อนเบอร์โทรศัพท์ให้ถูกต้อง
+          </div>
+          <div *ngIf="telephone.errors.maxlength">
+            เบอร์โทรศัพท์ไม่เกิน 15 ตัวอักษร
+          </div>
+        </div>
+      </a>
+      <a class="item">
+        <!-- <div class="ui large label" style="margin-left: 10px">ชื่อผู้ใช้งาน</div>
+        <div class="ui input">
+          <input type="text" [(ngModel)]="user.USERNAME" name="username" required #username="ngModel" maxlength="10">
+        </div>
+        <div class="ui left pointing red basic label" *ngIf="username.invalid && (username.dirty || username.touched)">
+          <div *ngIf="username.errors.required">
+            ชื่อผู้ใช้งาน
+          </div>
+          <div *ngIf="username.errors.maxlength">
+            ชื่อผู้ใช้งานไม่เกิน 10 ตัวอักษร
+          </div>
+        </div> -->
+        <div class="ui large label" style="margin-left: 10px">รหัสผ่าน</div>
+        <div class="ui input">
+          <input type="text" [(ngModel)]="user.PASSWORD" name="password" required #password="ngModel" maxlength="255">
+        </div>
+        <div class="ui left pointing red basic label" *ngIf="password.invalid && (password.dirty || password.touched)">
+          <div *ngIf="password.errors.required">
+            กรุณาป้อนรหัสผ่าน
+          </div>
+          <div *ngIf="password.errors.maxlength">
+            รหัสผ่านไม่เกิน 255 ตัวอักษร
+          </div>
+        </div>
+      </a>
+      <!-- <a class="item">
+        <div class="ui large label" style="margin-left: 10px">รหัสระดับ</div>
+        <div class="ui input">
+          <input type="text" pattern="^[0-9]{2}$" [(ngModel)]="user.LEVID" name="levid" required #levid="ngModel" maxlength="2">
+        </div>
+        <div class="ui left pointing red basic label" *ngIf="levid.invalid && (levid.dirty || levid.touched)">
+          <div *ngIf="levid.errors.required">
+            กรุณาป้อน รหัสระดับ
+          </div>
+          <div *ngIf="levid.invalid">
+            กรุณาป้อนรหัสระดับให้ถูกต้อง
+          </div>
+          <div *ngIf="levid.errors.maxlength">
+            รหัสระดับไม่เกิน 2 ตัวอักษร
+          </div>
+        </div>
+        <div class="ui large label" style="margin-left: 10px">รหัสสิทธ์</div>
+        <div class="ui input">
+          <input type="text" pattern="^[0-9]{2}$" [(ngModel)]="user.PID" name="pid" required #pid="ngModel" maxlength="2">
+        </div>
+        <div class="ui left pointing red basic label" *ngIf="pid.invalid && (pid.dirty || pid.touched)">
+          <div *ngIf="pid.errors.required">
+            กรุณาป้อนรหัสสิทธิ์
+          </div>
+          <div *ngIf="pid.invalid">
+            กรุณาป้อนรหัสสิทธิ์ให้ถูกต้อง
+          </div>
+          <div *ngIf="pid.errors.maxlength">
+            รหัสสิทธิ์ไม่เกิน 2 ตัวอักษร
+          </div>
+        </div>
+      </a> -->
+      <a class="item">
+        <div class="ui large label" style="margin-left: 10px">สถานะ</div>
+        <div class="field" style="margin: 10px">
+          ระงับการใช้งาน
+          <sui-checkbox (ngModelChange)="this.user.STATUS = !user.STATUS" [(ngModel)]="user.STATUS" name="status"
+            class="toggle">เปิดใช้งาน</sui-checkbox>
+        </div>
+      </a>
+    </div>
+  </div>
+  <button class="ui primary button" (click)="saveData()" [disabled]="(cwt.invalid || role.invalid ||  title.invalid || firstname.invalid || lastname.invalid || ssn.invalid || telephone.invalid || password.invalid)">
+    บันทึก
+  </button>
+  <button class="ui button" (click)="backClicked()">
+    ย้อนกลับ
+  </button>
+</form>

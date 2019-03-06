@@ -1,0 +1,22 @@
+export class SN2_1P2_6 {
+    A2_E6_2_1_CWT:string;
+    A2_E6_2_1_AMP:string;
+    A2_E6_2_1_TMB:string;
+    A2_E6_2_2_1:number;
+    A2_E6_2_2_2:number;
+    A2_E6_2_2_3:number;
+    A2_E6_2_3:boolean;
+    A2_E6_2_4:string[];
+    A2_E6_2_5:number;
+    A2_E6_2_5_2?:string;
+    A2_E6_2_6_1:boolean;
+    A2_E6_2_6_2:boolean;
+    A2_E6_2_6_3:boolean;
+    A2_E6_2_6_4:boolean;
+    A2_E6_2_6_5:boolean;
+    A2_E6_2_6_6:boolean;
+    A2_E6_2_6_7:boolean;
+    A2_E6_2_6_8:boolean;
+    A2_E6_2_6_9:boolean;
+    A2_E6_2_6_9_1?:string;
+}

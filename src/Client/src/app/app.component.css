@@ -1,0 +1,30 @@
+.topright {
+    position: absolute;
+    top: 0px;
+    right: 10px;
+}
+.loginContainer{
+    position: absolute;
+    top:0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+    background-image: url("../assets/Water-PNG-File.png");
+}
+#loginForm{
+    margin: auto;  
+    width: fit-content;
+    height: auto;
+}
+#forgetPassword{
+    top: 30%;
+    left: 20%;
+    right: 20%;
+    bottom: auto;
+    position: absolute;
+}
+#backToLoginBtn{
+    margin-left: 90%;
+    margin-top:10px;
+}

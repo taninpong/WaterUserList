@@ -1,0 +1,24 @@
+export class SN2_1P6 {
+    status:number;
+    A6_1:boolean;
+    A6_2_1_1?:number;
+    A6_2_1_2?:number;
+    A6_2_1_3?:number;
+    A6_2_1_4?:number;
+    A6_2_2_1?:number;
+    A6_2_2_2?:number;
+    A6_2_2_3?:number;
+    A6_2_2_4?:number;
+    A6_2_3_1?:number;
+    A6_2_3_2?:number;
+    A6_2_3_3?:number;
+    A6_2_3_4?:number;
+    A6_2_4_1?:number;
+    A6_2_4_2?:number;
+    A6_2_4_3?:number;
+    A6_2_4_4?:number;
+    A6_2_5_1?:number;
+    A6_2_5_2?:number;
+    A6_2_5_3?:number;
+    A6_2_5_4?:number;
+}

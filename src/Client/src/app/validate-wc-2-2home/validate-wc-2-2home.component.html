@@ -1,0 +1,165 @@
+<div class="ui small header">ตรวจสอบความถูกต้อง สน.2 (พื้นที่ย่อย)</div>
+<!-- <tree-root [nodes]="nodes" [options]="options"></tree-root> -->
+<div class="ui segments" *ngIf="sn22">
+  <div class="ui segment">
+    <a class="ui red ribbon label">สน.2 (พื้นที่ย่อย)</a>
+  </div>
+  <div style="padding:10px" class="ui segments" id="container">
+    <table class="ui celled striped table">
+      <thead>
+        <tr>
+          <th>
+            ชื่อหมู่บ้าน/ชุมชน
+          </th>
+          <th>
+            อยู่ในเขตชลประทานหรือไม่
+          </th>
+          <th>
+            วันที่นับจด
+          </th>
+          <th>
+            วันที่ตรวจรับ
+          </th>
+          <th>
+            สถานะข้อมูล
+          </th>
+          <th>
+            สถานะการอนุมัติ
+          </th>
+          <th>
+            ดูข้อมูล สน.2 (พื้นที่ย่อย)
+          </th>
+          <th>
+            ลบข้อมูล
+          </th>
+          <th id="big_wrap" colspan="2">
+            อนุมัติงาน
+          </th>
+          <th id="big_wrap" colspan="2">
+            ข้อเสนอแนะจากสถิถิจังหวัด
+          </th>
+          <th id="big_wrap" colspan="2">
+            ข้อเสนอแนะจากเจ้าหน้าที่ผู้ควบคุมงาน
+          </th>
+        </tr>
+        <tr>
+          <th>
+            VIL_NAME
+          </th>
+          <th>
+            BASIN
+          </th>
+          <th>
+            Create_DATE
+          </th>
+          <th>
+            submit_date
+          </th>
+          <th>
+            STATUS
+          </th>
+          <th>
+            status
+          </th>
+          <th>
+           
+          </th>
+          <!-- <th>
+            
+          </th> -->
+          <th id="big_wrap" colspan="2">
+            
+          </th>
+          <th id="big_wrap" colspan="2">
+            
+          </th>
+          <th id="big_wrap" colspan="2">
+            
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <ng-container *ngFor="let sn of sn22">
+          <tr>
+            <td> {{sn.B0.VIL_NAME}} </td>
+            <td> {{sn.B0.BASIN}} </td>
+            <td> {{sn.Create_DATE}} </td>
+            <td> {{sn.Approve_DATE}} </td>
+            <td> {{status_appr[sn.STATUS]}} </td>
+            <td> {{status_sn[sn.status]}} </td>
+            <td>
+              <button class="ui primary button" (click)="wc22Clicked(sn)">ดูข้อมูล สน.2 (พื้นที่ย่อย)</button>
+            </td>
+            <!-- <td>
+              <button class="ui red button" [disabled]="sn.STATUS > 1 && user.TID === '4'" (click)="deleteClicked(sn)">ลบข้อมูล สน.2 (พื้นที่ย่อย)</button>
+            </td> -->
+            <td *ngIf="user && user.TID === '4'" id="big_wrap" colspan="2">
+              <button class="ui green button" [disabled]="sn.STATUS > 1" (click)="validatedButtonClicked(sn)">ตรวจสอบแล้ว</button>
+              <button class="ui red button" (click)="reportButtonClicked(sn)">แจ้งให้พนักงานแก้ไข</button>
+            </td>
+            <td *ngIf="user && user.TID === '3'" id="big_wrap" colspan="2">
+              <button class="ui green button" [disabled]="sn.STATUS < 2" (click)="validatedCWTButtonClicked(sn)">ตรวจสอบแล้ว</button>
+              <button class="ui red button" (click)="reportButtonClicked(sn)">แจ้งให้พนักงานแก้ไข</button>
+            </td>
+            <td id="big_wrap" colspan="2">
+              <ng-container *ngIf="sn.messages_cwt">
+                <button class="ui green button" [disabled]="!sn.messages_cwt" (click)="viewComment(sn,3)">ดูข้อเสนอแนะ</button>
+              </ng-container>
+              <ng-container *ngIf="!sn.messages_cwt">
+                ไม่มีข้อมูล
+              </ng-container>
+            </td>
+            <td id="big_wrap" colspan="2">
+              <ng-container *ngIf="sn.messages">
+                <button class="ui green button" [disabled]="!sn.messages" (click)="viewComment(sn,4)">ดูข้อเสนอแนะ</button>
+              </ng-container>
+              <ng-container *ngIf="!sn.messages">
+                ไม่มีข้อมูล
+              </ng-container>
+            </td>
+          </tr>
+        </ng-container>
+      </tbody>
+    </table>
+  </div>
+  <div style="padding:10px">
+    <button class="ui button" (click)="backButtonClicked()">กลับ</button>
+  </div>
+</div>
+<sui-modal [isClosable]="true" *ngIf="hasMassege" (dismissed)="hasMassege = false" #modal>
+  <div class="header">ข้อความถึงเจ้าหน้าที่</div>
+  <div class="content">
+    <textarea style="width: 100%" [(ngModel)]="message"></textarea>
+  </div>
+  <div class="actions">
+    <button class="ui green button" (click)="sendMassege()" autofocus>ส่งข้อความ</button>
+  </div>
+</sui-modal>
+<sui-modal [isClosable]="true" *ngIf="hasComment" (dismissed)="hasComment = false" #modal>
+  <div class="header">ข้อความ</div>
+  <div style="font-size: 1.2em" class="content">
+    <div class="ui divided selection list">
+      <a class="item">
+        <div class="ui horizontal label">ข้อความ</div>
+        {{comment.message}}
+      </a>
+      <a class="item">
+        <div class="ui horizontal label">เวลา</div>
+        {{comment.date}}
+      </a>
+    </div>
+  </div>
+  <div class="actions">
+    <button class="ui green button" (click)="modal.approve('done')" autofocus>ตกลง</button>
+  </div>
+</sui-modal>
+<!-- <sui-modal [isClosable]="true" *ngIf="deleleClicked" (dismissed)="deleleClicked = false" #modal>
+  <div class="header">ลบข้อมูล สน.2 (พื้นที่ย่อย)</div>
+  <div style="font-size: 1.2em" class="content">
+    <h3>ต้องการลบข้อมูล สน.2 (พื้นที่ย่อย) ใช่หรือไม่</h3>
+  </div>
+  <div class="actions">
+    <button class="ui red button" (click)="approveDelete()" autofocus>ลบ</button>
+    <button class="ui button" (click)="modal.approve('done')">ยกเลิก</button>
+  </div>
+</sui-modal> -->

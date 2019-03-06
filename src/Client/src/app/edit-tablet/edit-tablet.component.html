@@ -1,0 +1,117 @@
+<form>
+  <h3 class="ui header">เพิ่มข้อมูลเจ้าหน้าที่</h3>
+  <div class="ui segments">
+    <div class="ui divided selection list">
+      <a class="item">
+        <div class="ui large label" style="margin-left: 10px">Serial เครื่อง Tablet</div>
+        <div class="ui input">
+          <input type="text" [(ngModel)]="tablet.tablet_sn" name="tabletsn" #tabletsn="ngModel" required maxlength="20">
+        </div>
+        <div class="ui left pointing red basic label" *ngIf="tabletsn.invalid && (tabletsn.dirty || tabletsn.touched)">
+          <div *ngIf="tabletsn.errors.required">
+            กรุณาป้อน Serial เครื่อง Tablet
+          </div>
+          <div *ngIf="tabletsn.errors.maxlength">
+            Serial เครื่อง Tablet ไม่เกิน 20 ตัวอักษร
+          </div>
+        </div>
+        <div class="ui large label" style="margin-left: 10px">Serial Adapter เครื่อง Tablet</div>
+        <div class="ui input">
+          <input type="text" [(ngModel)]="tablet.tablet_adapter" name="atabletsn" #atabletsn="ngModel" required maxlength="20">
+        </div>
+        <div class="ui left pointing red basic label" *ngIf="atabletsn.invalid && (atabletsn.dirty || atabletsn.touched)">
+          <div *ngIf="atabletsn.errors.required">
+            กรุณาป้อน Serial Adater เครื่อง Tablet
+          </div>
+          <div *ngIf="atabletsn.errors.maxlength">
+            Serial เครื่อง Tablet Adater ไม่เกิน 20 ตัวอักษร
+          </div>
+        </div>
+      </a>
+      <a class="item">
+        <div class="ui large label" style="margin-left: 10px">Serial ของแบตสำรอง</div>
+        <div class="ui input">
+          <input type="text" [(ngModel)]="tablet.powerbank_sn" name="powerbanksn" #powerbanksn="ngModel" required maxlength="20">
+        </div>
+        <div class="ui left pointing red basic label" *ngIf="powerbanksn.invalid && (powerbanksn.dirty || powerbanksn.touched)">
+          <div *ngIf="powerbanksn.errors.required">
+            กรุณาป้อน Serial ของแบตสำรอง
+          </div>
+          <div *ngIf="powerbanksn.errors.maxlength">
+            Serial ของแบตสำรอง ไม่เกิน 20 ตัวอักษร
+          </div>
+        </div>
+        <div class="ui large label" style="margin-left: 10px">Serial Adater ของแบตสำรอง</div>
+        <div class="ui input">
+          <input type="text" [(ngModel)]="tablet.powerbank_sn" name="apowerbanksn" #apowerbanksn="ngModel" required maxlength="20">
+        </div>
+        <div class="ui left pointing red basic label" *ngIf="apowerbanksn.invalid && (apowerbanksn.dirty || apowerbanksn.touched)">
+          <div *ngIf="apowerbanksn.errors.required">
+            กรุณาป้อน Serial Adater ของแบตสำรอง
+          </div>
+          <div *ngIf="apowerbanksn.errors.maxlength">
+            Serial Adater ของแบตสำรอง ไม่เกิน 20 ตัวอักษร
+          </div>
+        </div>
+      </a>
+      <a class="item">
+        <div class="ui large label" style="margin-left: 10px">หมายเลข SIM</div>
+        <div class="ui input">
+          <input type="text" [(ngModel)]="tablet.sim" name="sim" #sim="ngModel" required maxlength="15">
+        </div>
+        <div class="ui left pointing red basic label" *ngIf="sim.invalid && (sim.dirty || sim.touched)">
+          <div *ngIf="sim.errors.required">
+            กรุณาป้อน หมายเลข SIM
+          </div>
+          <div *ngIf="sim.errors.maxlength">
+            หมายเลข SIM ไม่เกิน 15 ตัวอักษร
+          </div>
+        </div>
+        <div class="ui large label" style="margin-left: 10px">จังหวัด</div>
+        <div class="ui input">
+          <sui-select style="margin: 10px" [(ngModel)]="selected_cwt" class="selection" (ngModelChange)="cwtSelected()" isSearchable="true" name="cwtid" #cwtid="ngModel">
+            <sui-select-option *ngFor="let cwt of cwt_list" [value]="cwt.name">
+            </sui-select-option>
+          </sui-select>
+        </div>
+        <div class="ui left pointing red basic label" *ngIf="cwtid.invalid && (cwtid.dirty || cwtid.touched)">
+          <div *ngIf="cwtid.errors.required">
+            กรุณาป้อนจังหวัด
+          </div>
+        </div>
+      </a>
+      <a class="item">
+        <div class="ui large label" style="margin-left: 10px">สิทธิ์ผู้ถือ</div>
+        <div class="ui input">
+          <sui-select style="margin: 10px" class="selection" [(ngModel)]="selected_role" (ngModelChange)="roleSelected()" isSearchable="true" name="fsid" #fsid="ngModel">
+            <sui-select-option *ngFor="let role of role_list" [value]="role">
+            </sui-select-option>
+          </sui-select>
+        </div>
+        <div class="ui left pointing red basic label" *ngIf="fsid.invalid && (fsid.dirty || fsid.touched)">
+          <div *ngIf="fsid.errors.required">
+            กรุณาป้อนสิทธิ์
+          </div>
+        </div>
+        <div class="ui large label" style="margin-left: 10px">เจ้าหน้าที่ผู้ถือ</div>
+        <div class="ui input">
+          <sui-select style="margin: 10px" class="selection" [(ngModel)]="selected_user" isSearchable="true" name="fiid" #fiid="ngModel">
+            <sui-select-option *ngFor="let user of user_list" [value]="user">
+            </sui-select-option>
+          </sui-select>
+        </div>
+        <div class="ui left pointing red basic label" *ngIf="fiid.invalid && (fiid.dirty || fiid.touched)">
+          <div *ngIf="fiid.errors.maxlength">
+            รหัสประจำตัวเจ้าหน้าที่ปฏิบัติงานสนาม ไม่เกิน 10 ตัวอักษร
+          </div>
+        </div>
+      </a>
+    </div>
+  </div>
+  <button class="ui primary button" (click)="saveData()">
+    บันทึก
+  </button>
+  <button class="ui button" (click)="backClicked()">
+    ย้อนกลับ
+  </button>
+</form>

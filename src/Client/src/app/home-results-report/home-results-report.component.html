@@ -1,0 +1,79 @@
+<div class="ui segments">
+  <div class="ui segment">
+    <a class="ui blue ribbon label">เลือกเขตพื้นที่</a>
+  </div>
+  <div class="ui divided selection list">
+    <a class="item">
+      <div class="ui large label" style="margin-left: 10px">ภาค</div>
+      <sui-select style="margin: 10px" class="selection" [(ngModel)]="selected_reg" (ngModelChange)="regSelected()" isSearchable="true">
+        <sui-select-option *ngFor="let selected of reg_list" [value]="selected.name">
+        </sui-select-option>
+      </sui-select>
+
+      <div class="ui large label" style="margin-left: 10px">จังหวัด</div>
+      <sui-select style="margin: 10px" class="selection" [(ngModel)]="selected_cwt" (ngModelChange)="cwtSelected()" isSearchable="true">
+        <sui-select-option *ngFor="let selected of cwt_list" [value]="selected.name">
+        </sui-select-option>
+      </sui-select>
+      <div class="ui large label" style="margin-left: 10px">อำเภอ / เขต</div>
+      <sui-select style="margin: 10px" class="selection" [(ngModel)]="selected_amp" (ngModelChange)="ampSelected()" isSearchable="true">
+        <sui-select-option *ngFor="let selected of amp_list" [value]="selected.name">
+        </sui-select-option>
+      </sui-select>
+    </a>
+    <a class="item">
+      <div class="ui large label" style="margin-left: 10px">ตำบล / แขวง</div>
+      <sui-select style="margin: 10px" class="selection" [(ngModel)]="selected_tam" (ngModelChange)="tamSelected()" isSearchable="true">
+        <sui-select-option *ngFor="let selected of tam_list" [value]="selected.name">
+        </sui-select-option>
+      </sui-select>
+      <div class="ui large label" style="margin-left: 10px">เขตการปกครอง</div>
+      <sui-select style="margin: 10px" class="selection" [(ngModel)]="selected_dis" (ngModelChange)="disSelected()" isSearchable="true">
+        <sui-select-option *ngFor="let selected of dis_list" [value]="selected.name">
+        </sui-select-option>
+      </sui-select>
+      <div class="ui large label" style="margin-left: 10px">พื้นที่ย่อย</div>
+      <sui-select style="margin: 10px" class="selection" [(ngModel)]="selected_ea" (ngModelChange)="eaSelected()" isSearchable="true">
+        <sui-select-option *ngFor="let selected of ea_list" [value]="selected.name">
+        </sui-select-option>
+      </sui-select>
+    </a>
+  </div>
+</div>
+<sui-tabset>
+  <div class="ui pointing secondary menu">
+    <a class="item" suiTabHeader="1" (click)="emitEventToChild1();tab = 1">เวลาเฉลี่ยที่ใช้ในการเก็บข้อมูลต่อหน่วยตัวอย่าง</a>
+    <a class="item" suiTabHeader="2" (click)="emitEventToChild2();tab = 2">จำนวนอาคารแยกตามผู้ให้ข้อมูล</a>
+    <a class="item" suiTabHeader="3" (click)="emitEventToChild3();tab = 3">จำนวนครัวเรือนแยกตามผู้ให้ข้อมูล</a>
+  </div>
+  <div class="ui segment" suiTabContent="1">
+    <app-results-time-report [events]="eventsSubject1.asObservable()"
+    [selected_reg]="selected_reg" 
+    [selected_cwt]="selected_cwt" 
+    [selected_amp]="selected_amp"
+    [selected_dis]="selected_dis"
+    [selected_tam]="selected_tam" 
+    [selected_ea]="selected_ea" >
+    </app-results-time-report>
+  </div>
+  <div class="ui segment" suiTabContent="2">
+    <app-results-number-building-report [events]="eventsSubject2.asObservable()"
+    [selected_reg]="selected_reg" 
+    [selected_cwt]="selected_cwt" 
+    [selected_amp]="selected_amp"
+    [selected_dis]="selected_dis"
+    [selected_tam]="selected_tam" 
+    [selected_ea]="selected_ea" >
+    </app-results-number-building-report>
+  </div>
+  <div class="ui segment" suiTabContent="3">
+    <app-results-number-household-report [events]="eventsSubject3.asObservable()"
+    [selected_reg]="selected_reg" 
+    [selected_cwt]="selected_cwt" 
+    [selected_amp]="selected_amp"
+    [selected_dis]="selected_dis"
+    [selected_tam]="selected_tam" 
+    [selected_ea]="selected_ea" >
+    </app-results-number-household-report>
+  </div>
+</sui-tabset>

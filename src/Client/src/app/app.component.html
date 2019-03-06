@@ -1,0 +1,116 @@
+<!-- The content below is only a placeholder and can be replaced. -->
+<ng-container *ngIf="user.FIRSTNAME">
+    <div class="ui top attached demo menu">
+        <table>
+            <tr>
+                <th>
+                    <a class="item" (click)="sidebar.toggle()">
+                        <i class="sidebar icon"></i> Menu
+                    </a>
+                </th>
+                <th>
+                    <div style="padding:10px" class="ui small image">
+                        <img src="../assets/nso_logo.jpg">
+                    </div>
+                </th>
+                <th>
+                    <div style="margin-left:20px; padding-top:20px" align="center">
+                        <div class="ui small header">
+                            <a routerLink="/">โครงสร้างระบบการจัดเก็บข้อมูลโครงสร้างพื้นฐานระดับพื้นที่เพื่อการบริหารจัดการทรัพยากรน้ำอย่างยั่งยืน
+                                ในลุ่มน้ำทั่วประเทศ จำนวน 25 ลุ่มน้ำ</a>
+                        </div>
+                    </div>
+                </th>
+                <th>
+                    <div class="ui dropdown topright" suiDropdown>
+
+                        <div class="text">
+                            <h5 class="ui header">
+                                {{user.FIRSTNAME}} {{user.LASTNAME}}
+                                <div class="sub header">{{user.TYPE_NAME}}</div>
+                            </h5>
+                        </div>
+                        <!-- <i class="dropdown icon"></i> -->
+                        <i class="material-icons">person_outline</i>
+                        <div class="menu" suiDropdownMenu>
+                            <div class="item" (click)="editUser()">แก้ไขข้อมูล</div>
+                            <div class="item" (click)="logoutClick()">ออกจากระบบ</div>
+                        </div>
+                    </div>
+                </th>
+            </tr>
+        </table>
+    </div>
+    <sui-sidebar-container class="ui bottom attached segment">
+        <sui-sidebar class="inverted vertical" #sidebar>
+            <a routerLink="/staff" *ngIf="user.TID == '4' || user.TID == '3' || user.TID == '1'" class="item">
+                <i class="material-icons" style="font-size:20px; padding-right:10px">people</i>รายชื่อเจ้าหน้าที่</a>
+            <a routerLink="/ea" class="item">
+                <i class="material-icons" style="font-size:20px; padding-right:10px">map</i>ข้อมูลเขตพื้นที่แจงนับ</a>
+            <a routerLink="/tablet" *ngIf="user.TID == '1' || user.TID == '3'" class="item">
+                <i class="material-icons" style="font-size:20px; padding-right:10px">tablet_android</i>ข้อมูล Tablet</a>
+            <a routerLink="/opentablet" *ngIf="user.TID == '3'" class="item">
+                <i class="material-icons" style="font-size:20px; padding-right:10px">mobile_friendly</i>เปิดใช้งาน
+                Tablet</a>
+            <a routerLink="/assign" class="item" *ngIf="user.TID == '4' || user.TID == '3'">
+                <i class="material-icons" style="font-size:20px; padding-right:10px">list</i>มอบหมายงาน</a>
+            <a routerLink="/track" class="item" *ngIf="user.TID == '4' || user.TID == '3'">
+                <i class="material-icons" style="font-size:20px; padding-right:10px">beenhere</i>ตรวจสอบความถูกต้อง</a>
+            <a routerLink="/report" class="item">
+                <i class="material-icons" style="font-size:20px; padding-right:10px">poll</i>รายงาน</a>
+        </sui-sidebar>
+        <sui-sidebar-sibling [isDimmedWhenVisible]="true">
+            <div class="ui basic segment">
+                <router-outlet></router-outlet>
+            </div>
+        </sui-sidebar-sibling>
+    </sui-sidebar-container>
+</ng-container>
+<ng-container *ngIf="!user.FIRSTNAME && !fogetPasswordFlag">
+    <div class="loginContainer">
+        <div class="ui medium image" style="text-align: center">
+            <img src="../assets/ตราสำนักงานสถิติแห่งชาติ.png">
+        </div>
+        <div *ngIf="loginFlag" class="ui active dimmer">
+            <div class="ui indeterminate text loader">กำลังเข้าสู่ระบบ</div>
+        </div>
+        <div id="loginForm" class="ui segment">
+            <div class="ui divided selection list">
+                <a class="item">
+                    <label style="padding:10px">รหัสเจ้าหน้าที่</label>
+                    <div class="ui left icon input">
+                        <input type="text" placeholder="userid" [(ngModel)]="user.USERID">
+                        <i class="user icon"></i>
+                    </div>
+                </a>
+                <a class="item">
+                    <label style="padding:10px">รหัสผ่าน</label>
+                    <div class="ui left icon input">
+                        <input type="password" placeholder="password" [(ngModel)]="user.PASSWORD">
+                        <i class="lock icon"></i>
+                    </div>
+                </a>
+                <a class="item">
+                    <button class="ui primary button" (click)="loginClick()">
+                        เข้าสู่ระบบ
+                    </button>
+                    <!-- <button class="ui button" (click)="fogetPasswordFlag = !fogetPasswordFlag">
+                        ลืมรหัสผ่าน
+                    </button> -->
+                </a>
+            </div>
+        </div>
+    </div>
+</ng-container>
+<ng-container *ngIf="!user.FIRSTNAME && fogetPasswordFlag">
+    <div class="ui medium image" style="text-align: center">
+        <img src="../assets/ตราสำนักงานสถิติแห่งชาติ.png">
+    </div>
+    <div id="forgetPassword" class="ui segment">
+        <app-forget-password></app-forget-password>
+        <button id="backToLoginBtn" class="ui basic button" (click)="fogetPasswordFlag = !fogetPasswordFlag">
+            <i class="material-icons">arrow_back</i>
+            กลับ
+        </button>
+    </div>
+</ng-container>

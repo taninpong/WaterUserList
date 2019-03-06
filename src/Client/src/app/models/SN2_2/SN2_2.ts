@@ -1,0 +1,53 @@
+import { SN2_2P1_3 } from "./SN2_2P1_3";
+import { SN2_2P1_5 } from "./SN2_2P1_5";
+import { SN2_2P2_12 } from "./SN2_2P2";
+import { SN2_2P0 } from "./SN2_2P0";
+export class SN2_2 {
+    STATUS: number;
+    status: number;
+    SN2_2_ID: string;
+    B0: SN2_2P0;
+    B1_1: boolean;
+    B1_2: number;
+    B1_3: SN2_2P1_3[];
+    B1_4_1: boolean;
+    B1_4_2: boolean;
+    B1_4_3: boolean;
+    B1_5_1: boolean;
+    B1_5_2: number;
+    B1_5: SN2_2P1_5[];
+    B1_9: boolean;
+    B1_10: boolean;
+    B1_10_1: boolean;
+    B1_10_2: boolean;
+    B1_10_3: boolean;
+    B1_10_4: boolean;
+    B1_10_5: boolean;
+    B1_10_6: boolean;
+    B1_10_7: boolean;
+    B1_10_8: boolean;
+    B1_10_9: boolean;
+    B1_10_10: boolean;
+    B1_11: boolean;
+    B1_11_1: boolean;
+    B1_11_2: boolean;
+    B1_11_3: boolean;
+    B1_11_4: boolean;
+    B1_11_4_1: string;
+    B2_12: boolean;
+    B2_12_1: number;
+    B2_12_1_1: SN2_2P2_12[];
+    Create_DATE: Date;
+    Modify_DATE: Array<Date>;
+    messages: {
+        date: Date;
+        message: string;
+    }[];
+    messages_cwt: {
+        date: Date;
+        message: string;
+    }[];
+    submit_date:Date;
+    version?:number;
+    saveVersion?:number;
+}

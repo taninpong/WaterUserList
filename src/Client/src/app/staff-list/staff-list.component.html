@@ -1,0 +1,133 @@
+<h3 class="ui header">จัดการรายชื่อเจ้าหน้าที่</h3>
+<div class="ui segments">
+  <h4 style="margin: 10px" class="ui header">รายชื่อผู้ใช้งาน</h4>
+  <div style="margin: 10px">
+    <button class="ui blue button" (click)="createUser()">เพิ่มรายชื่อ</button>
+    <button class="ui red button" (click)="deleteConfirm()">ลบรายชื่อ</button>
+    <button class="ui green button" (click)="uploadUser()">อัพโหลดข้อมูลรายชื่อ</button>
+    <button class="ui teal button" (click)="exportToExcel()">ดาวน์โหลดข้อมูลรายชื่อ</button>
+  </div>
+  <div class="ui segments">
+    <div class="column">
+      <div class="ui raised segment">
+        <a class="ui large label">จังหวัด</a>
+        <sui-select style="margin: 10px" class="selection" [(ngModel)]="filtered_cwt" (ngModelChange)="filterData()" placeholder="จังหวัด"
+          isSearchable="true" #selectCwt>
+          <sui-select-option *ngFor="let cwt of cwt_list" [value]="cwt.name">
+          </sui-select-option>
+        </sui-select>
+        <a class="ui large label">แสดงข้อมูลตามสิทธิ์</a>
+        <sui-select style="margin: 10px" class="selection" [(ngModel)]="filtered_role" (ngModelChange)="filterData()" placeholder="ทั้งหมด"
+          isSearchable="true" #selectRole>
+          <sui-select-option *ngFor="let role of role_list" [value]="role">
+          </sui-select-option>
+        </sui-select>
+        <a class="ui large label">สถานะการใช้งาน</a>
+        <sui-select style="margin: 10px" class="selection" [(ngModel)]="filtered_status" (ngModelChange)="filterData()" placeholder="ทั้งหมด"
+          isSearchable="true" #selectRole>
+          <sui-select-option *ngFor="let status of status_list" [value]="status">
+          </sui-select-option>
+        </sui-select>
+        <br>
+        <div class="ui large label" style="margin-left: 10px">จัดเรียงตาม</div>
+        <sui-select style="margin: 10px" class="selection" [(ngModel)]="sort_by" (ngModelChange)="sortData()" isSearchable="true">
+          <sui-select-option *ngFor="let colname of col_name" [value]="colname">
+          </sui-select-option>
+        </sui-select>
+        <div class="ui large label" style="margin-left: 10px">เรียงลำดับจาก</div>
+        <sui-select style="margin: 10px" class="selection" [(ngModel)]="sort_with" (ngModelChange)="sortData()" isSearchable="true">
+          <sui-select-option *ngFor="let colname of sort_map" [value]="colname">
+          </sui-select-option>
+        </sui-select>
+      </div>
+    </div>
+  </div>
+  <div class="ui segments" id="container" *ngIf="filtered_users">
+    <button style="margin:10px" class="ui blue button" (click)="reloadUser()">โหลดข้อมูลใหม่</button>
+    <sui-search [options]="users_for_search" (resultSelected)="onSearchSelected($event)"></sui-search>
+    <table class="ui celled striped table">
+      <thead>
+        <tr>
+          <th>
+            <div class="field">
+            </div>
+            <sui-checkbox [(ngModel)]="checked_map['0']" (checkChange)="checkAll()"></sui-checkbox> All
+          </th>
+          <th>
+            ชื่อ-นามสกุล
+          </th>
+          <th>
+            อีเมล์
+          </th>
+          <th>
+            เบอร์โทรศัพท์มือถือ
+          </th>
+          <th>
+            จังหวัด
+          </th>
+          <th>
+            สิทธิ์
+          </th>
+          <th>
+            แก้ไข
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <ng-container *ngFor="let user of filtered_users">
+          <tr>
+            <td class="collapsing">
+              <sui-checkbox [(ngModel)]="checked_map[user.USERID]"></sui-checkbox>{{user.USERID}}
+            </td>
+            <td>
+              <p suiPopup popupText="ชื่อ-นามสกุล">
+                {{user.FIRSTNAME}} {{user.LASTNAME}}
+              </p>
+            </td>
+            <td class="right aligned collapsing">
+              <p suiPopup popupText="อีเมล์">
+                {{user.EMAIL}} </p>
+            </td>
+            <td class="collapsing">
+              <p suiPopup popupText="เบอร์โทรศัพท์มือถือ">
+                {{user.PHONE}}
+              </p>
+            </td>
+            <td class="collapsing">
+              <p suiPopup popupText="จังหวัด">
+                {{user.CWT_NAME}}
+              </p>
+            </td>
+            <td class="collapsing">
+              <p suiPopup popupText="สิทธิ์">
+                {{user.TYPE_NAME}}
+              </p>
+            </td>
+            <td class="collapsing">
+              <p suiPopup popupText="แก้ไข">
+                <input type="hidden" name="edit_user" value="{{user.USERID}}">
+                <button class="ui icon button" (click)="editUser(user)">
+                  <i style="font-size:18px;" class="material-icons">create</i>
+                </button>
+              </p>
+            </td>
+          </tr>
+        </ng-container>
+      </tbody>
+    </table>
+  </div>
+</div>
+<div class="ui segment">
+  <sui-pagination [collectionSize]="user_list.length" [pageSize]="50" [maxSize]="10" [hasEllipses]="true" [(page)]="page" (pageChange)="showPage()">
+  </sui-pagination>
+</div>
+<sui-modal [isClosable]="true" *ngIf="deleted" (dismissed)="deleted = false" #modal>
+    <div class="header">ลบ</div>
+    <div class="content">
+        ต้องการลบผู้ใช้หรือไม่
+    </div>
+    <div class="actions">
+        <button class="ui red button" (click)="deleteUser()" autofocus>ลบ</button>
+        <button class="ui basic button" (click)="modal.deny()" autofocus>ยกเลิก</button>
+    </div>
+</sui-modal>

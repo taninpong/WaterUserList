@@ -1,0 +1,11 @@
+#wrap{
+    /* word-wrap: break-word; */
+    width: 1%;
+}
+#container {
+    overflow-x: auto;
+    overflow-y: auto;
+}
+.ui pagination menu{
+    text-align: center;
+}

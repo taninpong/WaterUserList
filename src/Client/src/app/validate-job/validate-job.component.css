@@ -1,0 +1,15 @@
+.ui.primary.button.reload{
+    margin-left: 20px;
+
+}
+#container {
+    overflow-x: auto;
+    overflow-y: auto;
+}
+#wrap{
+    /* word-wrap: break-word; */
+    width: 1%;
+}
+#big_wrap{
+    width: 10%;
+}

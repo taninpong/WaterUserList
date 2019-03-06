@@ -1,0 +1,207 @@
+<form>
+  <h3 class="ui header">สร้างข้อมูลเขตพื้นที่แจงนับ</h3>
+  <div class="ui segments">
+    <div class="ui divided selection list">
+      <a class="item">
+        <div class="ui large label">รหัสภาค</div>
+        <div class="ui input">
+          <input type="text" [(ngModel)]="ea.REG" name="regId" #regId="ngModel" required>
+        </div>
+        <div class="ui left pointing red basic label" *ngIf="regId.invalid && (regId.dirty || regId.touched)">
+          <div *ngIf="regId.errors.required">
+            กรุณาป้อนรหัสภาค
+          </div>
+        </div>
+        <div class="ui large label" style="margin-left: 10px">ชื่อภาค</div>
+        <div class="ui input">
+          <input type="text" [(ngModel)]="ea.REG_NAME" name="regName" #regName="ngModel" required>
+        </div>
+        <div class="ui left pointing red basic label" *ngIf="regName.invalid && (regName.dirty || regName.touched)">
+          <div *ngIf="regName.errors.required">
+            กรุณาป้อนชื่อภาค
+          </div>
+        </div>
+      </a>
+      <a class="item">
+        <div class="ui large label">รหัสจังหวัด</div>
+        <div class="ui input">
+          <input type="text" [(ngModel)]="ea.CWT" name="cwtId" #cwtId="ngModel" required>
+        </div>
+        <div class="ui left pointing red basic label" *ngIf="cwtId.invalid && (cwtId.dirty || cwtId.touched)">
+          <div *ngIf="cwtId.errors.required">
+            กรุณาป้อนรหัสจังหวัด
+          </div>
+        </div>
+        <div class="ui large label" style="margin-left: 10px">ชื่อจังหวัด</div>
+        <div class="ui input">
+          <input type="text" [(ngModel)]="ea.CWT_NAME" name="cwtName" #cwtName="ngModel" required>
+        </div>
+        <div class="ui left pointing red basic label" *ngIf="cwtName.invalid && (cwtName.dirty || cwtName.touched)">
+          <div *ngIf="cwtName.errors.required">
+            กรุณาป้อนชื่อจังหวัด
+          </div>
+        </div>
+      </a>
+      <a class="item">
+        <div class="ui large label">รหัสอำเภอ</div>
+        <div class="ui input">
+          <input type="text" [(ngModel)]="ea.AMP" name="ampId" #ampId="ngModel" required>
+        </div>
+        <div class="ui left pointing red basic label" *ngIf="ampId.invalid && (ampId.dirty || ampId.touched)">
+          <div *ngIf="ampId.errors.required">
+            กรุณาป้อนรหัสอำเภอ
+          </div>
+        </div>
+        <div class="ui large label" style="margin-left: 10px">ชื่ออำเภอ</div>
+        <div class="ui input">
+          <input type="text" [(ngModel)]="ea.AMP_NAME" name="ampName" #ampName="ngModel" required>
+        </div>
+        <div class="ui left pointing red basic label" *ngIf="ampName.invalid && (ampName.dirty || ampName.touched)">
+          <div *ngIf="ampName.errors.required">
+            กรุณาป้อนชื่ออำเภอ
+          </div>
+        </div>
+      </a>
+      <a class="item">
+        <div class="ui large label">รหัสตำบล</div>
+        <div class="ui input">
+          <input type="text" [(ngModel)]="ea.TAM" name="tamId" #tamId="ngModel" required>
+        </div>
+        <div class="ui left pointing red basic label" *ngIf="tamId.invalid && (tamId.dirty || tamId.touched)">
+          <div *ngIf="tamId.errors.required">
+            กรุณาป้อนรหัสตำบล
+          </div>
+        </div>
+        <div class="ui large label" style="margin-left: 10px">ชื่อตำบล</div>
+        <div class="ui input">
+          <input type="text" [(ngModel)]="ea.TAM_NAME" name="tamName" #tamName="ngModel" required>
+        </div>
+        <div class="ui left pointing red basic label" *ngIf="tamName.invalid && (tamName.dirty || tamName.touched)">
+          <div *ngIf="tamName.errors.required">
+            กรุณาป้อนชื่อตำบล
+          </div>
+        </div>
+        <div class="ui large label">เขตการปกครอง</div>
+        <div class="ui input">
+          <input type="text" [(ngModel)]="ea.DISTRICT" name="districtId" #districtId="ngModel" required>
+        </div>
+        <div class="ui left pointing red basic label" *ngIf="districtId.invalid && (districtId.dirty || districtId.touched)">
+          <div *ngIf="districtId.errors.required">
+            กรุณาป้อนเขตการปกครอง
+          </div>
+        </div>
+      </a>
+      <a class="item">
+        <div class="ui large label" style="margin-left: 10px">รหัสเทศบาล</div>
+        <div class="ui input">
+          <input type="text" [(ngModel)]="ea.MUN" name="munId">
+        </div>
+        <div class="ui large label" style="margin-left: 10px">ชื่อเทศบาล</div>
+        <div class="ui input">
+          <input type="text" [(ngModel)]="ea.MUN_NAME" name="munName">
+        </div>
+      </a>
+      <a class="item">
+        <div class="ui large label" style="margin-left: 10px">รหัส อบต.</div>
+        <div class="ui input">
+          <input type="text" [(ngModel)]="ea.TAO" name="taoId">
+        </div>
+        <div class="ui large label" style="margin-left: 10px">ชื่อ อบต.</div>
+        <div class="ui input">
+          <input type="text" [(ngModel)]="ea.TAO_NAME" name="taoName">
+        </div>
+        <div class="ui large label">รหัส EA</div>
+        <div class="ui input">
+          <input type="text" [(ngModel)]="ea.EA" name="eaId" #eaId="ngModel" required>
+        </div>
+        <div class="ui left pointing red basic label" *ngIf="eaId.invalid && (eaId.dirty || eaId.touched)">
+          <div *ngIf="eaId.errors.required">
+            กรุณาป้อน รหัส EA
+          </div>
+        </div>
+      </a>
+      <a class="item">
+        <div class="ui large label" style="margin-left: 10px">รหัสหมู่บ้าน</div>
+        <div class="ui input">
+          <input type="text" [(ngModel)]="ea.VIL" name="vilId">
+        </div>
+        <div class="ui large label" style="margin-left: 10px">ชื่อหมู่บ้าน</div>
+        <div class="ui input">
+          <input type="text" [(ngModel)]="ea.VIL_NAME" name="vilName">
+        </div>
+      </a>
+      <a class="item">
+        <div class="ui large label">แผนที่</div>
+        <div class="ui input">
+          <input type="text" [(ngModel)]="ea.MAP_STATUS" name="mapId" #mapId="ngModel" required>
+        </div>
+        <div class="ui left pointing red basic label" *ngIf="mapId.invalid && (mapId.dirty || mapId.touched)">
+          <div *ngIf="mapId.errors.required">
+            กรุณาป้อน แผนที่
+          </div>
+        </div>
+        <div class="ui large label" style="margin-left: 10px">จำนวนบ้าน</div>
+        <div class="ui input">
+          <input type="text" [(ngModel)]="ea.Building" name="building" #building="ngModel" required>
+        </div>
+        <div class="ui left pointing red basic label" *ngIf="building.invalid && (building.dirty || building.touched)">
+          <div *ngIf="building.errors.required">
+            กรุณาป้อน จำนวนบ้าน
+          </div>
+        </div>
+      </a>
+      <a class="item">
+        <div class="ui large label">จำนวนครัวเรือน</div>
+        <div class="ui input">
+          <input type="text" [(ngModel)]="ea.Household" name="household" #household="ngModel" required>
+        </div>
+        <div class="ui left pointing red basic label" *ngIf="household.invalid && (household.dirty || household.touched)">
+          <div *ngIf="household.errors.required">
+            กรุณาป้อน จำนวนครัวเรือน
+          </div>
+        </div>
+        <div class="ui large label" style="margin-left: 10px">จำนวนครัวเรือนเกษตร</div>
+        <div class="ui input">
+          <input type="text" [(ngModel)]="ea.Agricultural_HH" name="agriculturalhh" #agriculturalhh="ngModel" required>
+        </div>
+        <div class="ui left pointing red basic label" *ngIf="building.invalid && (agriculturalhh.dirty || agriculturalhh.touched)">
+          <div *ngIf="agriculturalhh.errors.required">
+            กรุณาป้อน จำนวนครัวเรือนเกษตร
+          </div>
+        </div>
+      </a>
+      <a class="item">
+        <div class="ui large label" style="margin-left: 10px">จำนวนสถานประกอบการธุรกิจทางการค้าและธุรกิจทางการบริการ</div>
+        <div class="ui input">
+          <input type="text" [(ngModel)]="ea.ES_BUSI" name="ES_BUSI">
+        </div>
+        <div class="ui large label" style="margin-left: 10px">จำนวนสถานประกอบการอุสาหกรรมการผลิต</div>
+        <div class="ui input">
+          <input type="text" [(ngModel)]="ea.ES_INDUS" name="ES_INDUS">
+        </div>
+      </a>
+      <a class="item">
+        <div class="ui large label" style="margin-left: 10px">จำนวนโรงแรมและเกสต์เฮาส์</div>
+        <div class="ui input">
+          <input type="text" [(ngModel)]="ea.ES_HOTEL" name="ES_HOTEL">
+        </div>
+        <div class="ui large label" style="margin-left: 10px">จำนวนโรงพยาบาลเอกชน</div>
+        <div class="ui input">
+          <input type="text" [(ngModel)]="ea.ES_PV_HOS" name="ES_PV_HOS">
+        </div>
+      </a>
+      <a class="item">
+        <div class="ui large label" style="margin-left: 10px">หมายเหตุ</div>
+        <div class="ui fluid input" style="margin-left: 10px">
+          <input type="text" [(ngModel)]="ea.REMARK" name="REMARK">
+        </div>
+      </a>
+    </div>
+  </div>
+  <button class="ui primary button" (click)="saveData()">
+    บันทึก
+  </button>
+  <button class="ui button" (click)="backClicked()">
+    ย้อนกลับ
+  </button>
+</form>

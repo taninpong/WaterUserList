@@ -1,0 +1,49 @@
+<div class="ui small header">รายงานติดตามฯ</div>
+<sui-tabset>
+  <div class="ui top attached tabular menu">
+    <a class="item" (activate)="tab = 1" suiTabHeader="1" (click)="emitEventToChild1()">รายงานความก้าวหน้าการปฏิบัติงาน</a>
+    <a class="item" (activate)="tab = 2" suiTabHeader="2" (click)="emitEventToChild2()">รายงานการมอบหมายงาน</a>
+    <a class="item" (activate)="tab = 3" suiTabHeader="3" (click)="emitEventToChild3()">รายงานความก้าวหน้าการตรวจงาน</a>
+    <a class="item" (activate)="tab = 4" suiTabHeader="4" (click)="emitEventToChild4()">รายงานความก้าวหน้าการอนุมัติงาน</a>
+  </div>
+  <div class="ui bottom attached segment" suiTabContent="1">
+    <app-progress-report 
+    [events]="eventsSubject1.asObservable()"
+    [selected_reg]="selected_reg" (messageEventReg)="receiveMessageReg($event)"
+    [selected_cwt]="selected_cwt" (messageEventCwt)="receiveMessageCwt($event)" 
+    [selected_amp]="selected_amp" (messageEventAmp)="receiveMessageAmp($event)"
+    [selected_dis]="selected_dis" (messageEventDis)="receiveMessageDis($event)"
+    [selected_tam]="selected_tam" (messageEventTam)="receiveMessageTam($event)"
+    [selected_ea]="selected_ea" (messageEventEa)="receiveMessageEa($event)"></app-progress-report>
+  </div>
+  <div class="ui bottom attached segment" suiTabContent="2">
+    <app-assign-report 
+    [events]="eventsSubject2.asObservable()"
+    [selected_reg]="selected_reg" (messageEventReg)="receiveMessageReg($event)"
+    [selected_cwt]="selected_cwt" (messageEventCwt)="receiveMessageCwt($event)" 
+    [selected_amp]="selected_amp" (messageEventAmp)="receiveMessageAmp($event)"
+    [selected_dis]="selected_dis" (messageEventDis)="receiveMessageDis($event)"
+    [selected_tam]="selected_tam" (messageEventTam)="receiveMessageTam($event)"
+    [selected_ea]="selected_ea" (messageEventEa)="receiveMessageEa($event)"></app-assign-report>
+  </div>
+  <div class="ui bottom attached segment" suiTabContent="3">
+    <app-progress-validate 
+    [events]="eventsSubject3.asObservable()"
+    [selected_reg]="selected_reg" (messageEventReg)="receiveMessageReg($event)" 
+    [selected_cwt]="selected_cwt" (messageEventCwt)="receiveMessageCwt($event)" 
+    [selected_amp]="selected_amp" (messageEventAmp)="receiveMessageAmp($event)"
+    [selected_dis]="selected_dis" (messageEventDis)="receiveMessageDis($event)"
+    [selected_tam]="selected_tam" (messageEventTam)="receiveMessageTam($event)"
+    [selected_ea]="selected_ea" (messageEventEa)="receiveMessageEa($event)"></app-progress-validate>
+  </div>
+  <div class="ui bottom attached segment" suiTabContent="4">
+    <app-progress-approve 
+    [events]="eventsSubject4.asObservable()"
+    [selected_reg]="selected_reg" (messageEventReg)="receiveMessageReg($event)"
+    [selected_cwt]="selected_cwt" (messageEventCwt)="receiveMessageCwt($event)" 
+    [selected_amp]="selected_amp" (messageEventAmp)="receiveMessageAmp($event)"
+    [selected_dis]="selected_dis" (messageEventDis)="receiveMessageDis($event)"
+    [selected_tam]="selected_tam" (messageEventTam)="receiveMessageTam($event)"
+    [selected_ea]="selected_ea" (messageEventEa)="receiveMessageEa($event)"></app-progress-approve>
+  </div>
+</sui-tabset>

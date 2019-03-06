@@ -1,0 +1,329 @@
+<div class="ui small header">ตรวจสอบความถูกต้อง</div>
+<div style="padding:10px" class="ui segments">
+    <div class="ui segment">
+        <a class="ui blue ribbon label">เลือกเขตพื้นที่</a>
+    </div>
+    <div class="ui divided selection list">
+        <a class="item">
+            <div class="ui large label" style="margin-left: 10px">ภาค</div>
+            <sui-select style="margin: 10px" class="selection" [(ngModel)]="selected_reg" (ngModelChange)="regSelected()"
+                isSearchable="true">
+                <sui-select-option *ngFor="let selected_reg of reg_list" [value]="selected_reg.name">
+                </sui-select-option>
+            </sui-select>
+
+            <div class="ui large label" style="margin-left: 10px">จังหวัด</div>
+            <sui-select style="margin: 10px" class="selection" [(ngModel)]="selected_cwt" (ngModelChange)="cwtSelected()"
+                isSearchable="true">
+                <sui-select-option *ngFor="let selected_cwt of cwt_list" [value]="selected_cwt.name">
+                </sui-select-option>
+            </sui-select>
+            <div class="ui large label" style="margin-left: 10px">อำเภอ / เขต</div>
+            <sui-select style="margin: 10px" class="selection" [(ngModel)]="selected_amp" (ngModelChange)="ampSelected()"
+                isSearchable="true">
+                <sui-select-option *ngFor="let selected_amp of amp_list" [value]="selected_amp.name">
+                </sui-select-option>
+            </sui-select>
+        </a>
+        <a class="item">
+            <div class="ui large label" style="margin-left: 10px">ตำบล / แขวง</div>
+            <sui-select style="margin: 10px" class="selection" [(ngModel)]="selected_tam" (ngModelChange)="tamSelected()"
+                isSearchable="true">
+                <sui-select-option *ngFor="let selected_tam of tam_list" [value]="selected_tam.name">
+                </sui-select-option>
+            </sui-select>
+            <div class="ui large label" style="margin-left: 10px">เขตการปกครอง</div>
+            <sui-select style="margin: 10px" class="selection" [(ngModel)]="selected_dis" (ngModelChange)="disSelected()"
+                isSearchable="true">
+                <sui-select-option *ngFor="let selected_dis of dis_list" [value]="selected_dis.name">
+                </sui-select-option>
+            </sui-select>
+            <div class="ui large label" style="margin-left: 10px">พื้นที่ย่อย</div>
+            <sui-select style="margin: 10px" class="selection" [(ngModel)]="selected_ea" (ngModelChange)="eaSelected()"
+                isSearchable="true">
+                <sui-select-option *ngFor="let selected_ea of ea_list" [value]="selected_ea.name">
+                </sui-select-option>
+            </sui-select>
+        </a>
+        <a class="item">
+            <div class="ui large label" style="margin-left: 10px">เจ้าหน้าที่คุมงานสนาม</div>
+            <sui-select style="margin: 10px" class="selection" [(ngModel)]="selected_fs" (ngModelChange)="sn1statusSelected()"
+                isSearchable="true">
+                <sui-select-option *ngFor="let fs of fs_list" [value]="fs">
+                </sui-select-option>
+            </sui-select>
+            <div class="ui large label" style="margin-left: 10px">เจ้าหน้าที่เก็บรวบรวมข้อมูล</div>
+            <sui-select style="margin: 10px" class="selection" [(ngModel)]="selected_fi" (ngModelChange)="sn1statusSelected()"
+                isSearchable="true">
+                <sui-select-option *ngFor="let fi of fi_list" [value]="fi">
+                </sui-select-option>
+            </sui-select>
+            <div class="ui large label" style="margin-left: 10px">สถานะ สน.1-1 (แบบนับจด)</div>
+            <sui-select style="margin: 10px" class="selection" [(ngModel)]="selected_sn1status" (ngModelChange)="sn1statusSelected()"
+                isSearchable="true">
+                <sui-select-option *ngFor="let st of sn1_statuses" [value]="st">
+                </sui-select-option>
+            </sui-select>
+        </a>
+        <a class="item">
+            <div class="ui large label" style="margin-left: 10px">จัดเรียงตาม</div>
+            <sui-select style="margin: 10px" class="selection" [(ngModel)]="sort_by" (ngModelChange)="sortData()"
+                isSearchable="true">
+                <sui-select-option *ngFor="let colname of col_name" [value]="colname">
+                </sui-select-option>
+            </sui-select>
+            <div class="ui large label" style="margin-left: 10px">เรียงลำดับจาก</div>
+            <sui-select style="margin: 10px" class="selection" [(ngModel)]="sort_with" (ngModelChange)="sortData()"
+                isSearchable="true">
+                <sui-select-option *ngFor="let colname of sort_map" [value]="colname">
+                </sui-select-option>
+            </sui-select>
+        </a>
+    </div>
+</div>
+<div class="ui segments">
+    <div class="ui segment">
+        <a class="ui blue ribbon label">ความก้าวหน้าของงาน</a>
+        <div *ngIf="user.TID >= '3'" style="text-align: center">
+            <div class="ui label">ภาค {{selected_reg}}</div>
+            <div class="ui label">จังหวัด {{selected_cwt}}</div>
+        </div>
+    </div>
+    <ng-container *ngIf="area_list">
+        <ng-container *ngIf="area_list.length">
+            <div style="padding:10px" class="ui segments" id="container">
+                <!-- *ngIf="user_list.length > 0" -->
+                <table class="ui celled striped table">
+                    <thead>
+                        <tr>
+                            <th>
+                                เจ้าหน้าที่เก็บรวบรวมข้อมูล
+                            </th>
+                            <th>
+                                เจ้าหน้าที่คุมงานสนาม
+                            </th>
+                            <th id="wrap" *ngIf="user.TID < '3'">
+                                รหัสภาค
+                            </th>
+                            <th *ngIf="user.TID < '3'">
+                                ชื่อภาค
+                            </th>
+                            <th *ngIf="user.TID < '3'">
+                                รหัสจังหวัด
+                            </th>
+                            <th *ngIf="user.TID < '3'">
+                                ชื่อจังหวัด
+                            </th>
+                            <th>
+                                รหัสอำเภอ
+                            </th>
+                            <th>
+                                ชื่ออำเภอ
+                            </th>
+                            <th>
+                                รหัสตำบล
+                            </th>
+                            <th>
+                                ชื่อตำบล
+                            </th>
+                            <th id="wrap">
+                                เขตการปกครอง
+                            </th>
+                            <th>
+                                รหัส EA
+                            </th>
+                            <th>สถานะ สน.1-1 (แบบนับจด)</th>
+                            <th colspan="2">
+                                ข้อมูล สน.1-1 (แบบนับจด)
+                            </th>
+                            <th *ngIf="user && user.TID === '3'" colspan="2">
+                                อนุมัติงาน สน.1-1 (แบบนับจด)
+                            </th>
+                            <th *ngIf="user && user.TID <= '4'">
+                                ข้อเสนอแนะ สน.1-1 (แบบนับจด)
+                            </th>
+                            <th colspan="2">สถานะ สน.2 (พื้นที่ย่อย)</th>
+                            <th colspan="2">
+                                ข้อมูล สน.2 (พื้นที่ย่อย)
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <ng-container *ngFor="let p of area_list">
+                            <tr>
+                                <td>
+                                    <p suiPopup popupText="เจ้าหน้าที่เก็บรวบรวมข้อมูล">
+                                        <ng-container *ngFor="let f of p.FI">
+                                            <ng-container *ngIf="users.getUserByID(f)">
+                                                {{f}} : {{users.getUserByID(f).FIRSTNAME}}
+                                                {{users.getUserByID(f).LASTNAME}}
+                                            </ng-container>
+                                        </ng-container>
+                                    </p>
+                                </td>
+                                <td>
+                                    <p suiPopup popupText="เจ้าหน้าที่คุมงานสนาม">
+                                        <ng-container *ngIf="p.FS">
+                                            <ng-container *ngIf="users.getUserByID(p.FS)">
+                                                {{p.FS}} : {{users.getUserByID(p.FS).FIRSTNAME}}
+                                                {{users.getUserByID(p.FS).LASTNAME}}
+                                            </ng-container>
+                                        </ng-container>
+                                    </p>
+                                </td>
+                                <td id="wrap" *ngIf="user.TID < '3'">
+                                    <p suiPopup popupText="รหัสภาค">{{p.REG}}</p>
+                                </td>
+                                <td *ngIf="user.TID < '3'">
+                                    <p suiPopup popupText="ชื่อภาค">{{p.REG_NAME}}</p>
+                                </td>
+                                <td id="wrap" *ngIf="user.TID < '3'">
+                                    <p suiPopup popupText="รหัสจังหวัด">{{p.CWT}}</p>
+                                </td>
+                                <td *ngIf="user.TID < '3'">
+                                    <p suiPopup popupText="ชื่อจังหวัด">{{p.CWT_NAME}}</p>
+                                </td>
+                                <td id="wrap">
+                                    <p suiPopup popupText="รหัสอำเภอ">{{p.AMP}}</p>
+                                </td>
+                                <td>
+                                    <p suiPopup popupText="ชื่ออำเภอ">{{p.AMP_NAME}}</p>
+                                </td>
+                                <td id="wrap">
+                                    <p suiPopup popupText="รหัสตำบล">{{p.TAM}}</p>
+                                </td>
+                                <td>
+                                    <p suiPopup popupText="ชื่อตำบล">{{p.TAM_NAME}}</p>
+                                </td>
+                                <td id="wrap">
+                                    <p suiPopup popupText="เขตการปกครอง">{{p.DISTRICT}}</p>
+                                </td>
+                                <td id="wrap">
+                                    <p suiPopup popupText="รหัส EA">{{p.EA}}</p>
+                                </td>
+                                <td>
+                                    <p suiPopup popupText="สถานะ สน.1-1 (แบบนับจด)">
+                                        <ng-container *ngIf="hasDataSN1(p)">
+                                            <ng-container [ngSwitch]="getSN1Status(p)">
+                                                <ng-container *ngSwitchCase=0>
+                                                    กำลังสำรวจ
+                                                </ng-container>
+                                                <ng-container *ngSwitchCase=1>
+                                                    สำรวจครบทั้ง EA แล้ว
+                                                </ng-container>
+                                                <ng-container *ngSwitchCase=2>
+                                                    เจ้าหน้าที่ผู้ควบคุมตรวจสอบแล้ว
+                                                </ng-container>
+                                                <ng-container *ngSwitchCase=3>
+                                                    สถิติจังหวัดอนุมัติแล้ว
+                                                </ng-container>
+                                            </ng-container>
+                                        </ng-container>
+                                        <ng-container *ngIf="!hasDataSN1(p)">
+                                            ไม่มีข้อมูล
+                                        </ng-container>
+                                    </p>
+                                </td>
+                                <td id="big_wrap" colspan="2">
+                                    <p suiPopup popupText="ข้อมูล สน.1-1 (แบบนับจด)">
+                                        <ng-container *ngIf="hasDataSN1(p)">
+                                            <button class="ui primary button" (click)="validateClicked(p)">ดูข้อมูล
+                                                สน.1-1 (แบบนับจด)</button>
+                                        </ng-container>
+                                        <ng-container *ngIf="!hasDataSN1(p)">
+                                            ไม่มีข้อมูล
+                                        </ng-container>
+                                    </p>
+                                </td>
+                                <td *ngIf="user && user.TID === '3'" colspan="2">
+                                    <p suiPopup popupText="อนุมัติงาน สน.1-1 (แบบนับจด)">
+                                        <ng-container *ngIf="hasDataSN1(p)">
+                                            <button *ngIf="user && user.TID === '3'" class="ui green button" [disabled]=" getSN1Status(p) != 2"
+                                                (click)="validatedButtonClicked(p)">ให้ผ่าน</button>
+                                            <button *ngIf="user && user.TID === '3'" class="ui red button" [disabled]=" getSN1Status(p) != 2"
+                                                (click)="reportFSButtonClicked(p)">ต้องแก้ไข</button>
+                                        </ng-container>
+                                        <ng-container *ngIf="!hasDataSN1(p)">
+                                            ไม่มีข้อมูล
+                                        </ng-container>
+                                    </p>
+                                </td>
+                                <td *ngIf="user && user.TID <= '4'">
+                                    <p suiPopup popupText="ข้อเสนอแนะ สน.1-1 (แบบนับจด)">
+                                        <ng-container *ngIf="hasDataSN1(p)">
+                                            <button class="ui green button" [disabled]="!hasMessege(p)" (click)="viewComment(p)">ดูข้อเสนอแนะ</button>
+                                        </ng-container>
+                                        <ng-container *ngIf="!hasDataSN1(p)">
+                                            ไม่มีข้อมูล
+                                        </ng-container>
+                                    </p>
+                                </td>
+                                <td id="big_wrap" colspan="2">
+                                    <p suiPopup popupText="สถานะ สน.2 (พื้นที่ย่อย)">
+                                        <ng-container *ngIf="hasDataSN22(p)">
+                                            <div *ngFor="let sn of sn2_2List">{{status_appr[sn.STATUS]}}</div>
+                                        </ng-container>
+                                        <ng-container *ngIf="!hasDataSN22(p)">
+                                            ไม่มีข้อมูล
+                                        </ng-container>
+                                    </p>
+                                </td>
+                                <td colspan="2">
+                                    <p suiPopup popupText="ข้อมูล สน.2 (พื้นที่ย่อย)">
+                                        <ng-container *ngIf="hasDataSN22(p)">
+                                            <button class="ui primary button" (click)="wc22Clicked(p)">ดูข้อมูล สน.2
+                                                (พื้นที่ย่อย)</button>
+                                        </ng-container>
+                                        <ng-container *ngIf="!hasDataSN22(p)">
+                                            ไม่มีข้อมูล
+                                        </ng-container>
+                                    </p>
+                                </td>
+                            </tr>
+                        </ng-container>
+                    </tbody>
+                </table>
+            </div>
+        </ng-container>
+    </ng-container>
+    <ng-container *ngIf="!area_list || !area_list.length">
+        <div style="text-align: center">
+            ไม่พบข้อมูล
+        </div>
+    </ng-container>
+    <div class="ui segment" *ngIf="filter_area.areas">
+        <sui-pagination [collectionSize]="filter_area.areas.length" [pageSize]="10" [maxSize]="10" [hasEllipses]="true"
+            [(page)]="page" (pageChange)="showPage()">
+        </sui-pagination>
+    </div>
+</div>
+<sui-modal [isClosable]="true" *ngIf="hasMassege" (dismissed)="hasMassege = false" #modal>
+    <div class="header">ข้อความถึงเจ้าหน้าที่</div>
+    <div class="content">
+        <textarea style="width: 100%" [(ngModel)]="messege"></textarea>
+    </div>
+    <div class="actions">
+        <button class="ui green button" (click)="sendMassege()" autofocus>ส่งข้อความ</button>
+    </div>
+</sui-modal>
+<sui-modal [isClosable]="true" *ngIf="hasComment" (dismissed)="hasComment = false" #modal>
+    <div class="header">ข้อความ</div>
+    <div style="font-size: 1.2em" class="content">
+        <div class="ui divided selection list">
+            <a class="item">
+                <div class="ui horizontal label">ข้อความ</div>
+                {{comment.messege}}
+            </a>
+            <a class="item">
+                <div class="ui horizontal label">เวลา</div>
+                {{comment.date}}
+            </a>
+        </div>
+    </div>
+    <div class="actions">
+        <button class="ui green button" (click)="modal.approve('done')" autofocus>ตกลง</button>
+    </div>
+</sui-modal>
+<!-- <div class="ui segments" *ngIf="progresses_filter.length == 0">
+    <h5 style="margin:10px; text-align: center;">ไม่พบข้อมูล</h5>
+</div> -->

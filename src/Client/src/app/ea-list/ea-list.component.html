@@ -1,0 +1,252 @@
+<h3 class="ui header">จัดการข้อมูลเขตแจงนับ</h3>
+<ng-container *ngIf="filter_areas.areas != null">
+  <div style="margin: 10px">
+    <button class="ui blue button" [disabled]="user.TID > '1'" (click)="createEa()">เพิ่มเขตพื้นที่แจงนับ</button>
+    <button class="ui red button" [disabled]="user.TID > '1'" (click)="deleted = true">ลบเขตพื้นที่แจงนับ</button>
+    <button class="ui green button" [disabled]="user.TID > '1'" (click)="uploadEa()">อัพโหลดเขตพื้นที่แจงนับ</button>
+  </div>
+  <div style="padding:10px" class="ui segments">
+    <div class="ui divided selection list">
+      <a class="item">
+        <div class="ui large label" style="margin-left: 10px">ภาค</div>
+        <sui-select style="margin: 10px" class="selection" [(ngModel)]="selected_reg" (ngModelChange)="regSelected()" isSearchable="true">
+          <sui-select-option *ngFor="let selected_reg of reg_list" [value]="selected_reg.name">
+          </sui-select-option>
+        </sui-select>
+        <div class="ui large label" style="margin-left: 10px">จังหวัด</div>
+        <sui-select style="margin: 10px" class="selection" [(ngModel)]="selected_cwt" (ngModelChange)="cwtSelected()" isSearchable="true">
+          <sui-select-option *ngFor="let selected_cwt of cwt_list" [value]="selected_cwt.name">
+          </sui-select-option>
+        </sui-select>
+        <div class="ui large label" style="margin-left: 10px">อำเภอ / เขต</div>
+        <sui-select style="margin: 10px" class="selection" [(ngModel)]="selected_amp" (ngModelChange)="ampSelected()" isSearchable="true">
+          <sui-select-option *ngFor="let selected_amp of amp_list" [value]="selected_amp.name">
+          </sui-select-option>
+        </sui-select>
+        <div class="ui large label" style="margin-left: 10px">ตำบล / แขวง</div>
+        <sui-select style="margin: 10px" class="selection" [(ngModel)]="selected_tam" (ngModelChange)="tamSelected()" isSearchable="true">
+          <sui-select-option *ngFor="let selected_tam of tam_list" [value]="selected_tam.name">
+          </sui-select-option>
+        </sui-select>
+        <div class="ui large label" style="margin-left: 10px">เขตการปกครอง</div>
+        <sui-select style="margin: 10px" class="selection" [(ngModel)]="selected_dis" (ngModelChange)="disSelected()" isSearchable="true">
+          <sui-select-option *ngFor="let selected_dis of dis_list" [value]="selected_dis.name">
+          </sui-select-option>
+        </sui-select>
+      </a>
+      <a class="item">
+        <div class="ui large label" style="margin-left: 10px">จัดเรียงตาม</div>
+        <sui-select style="margin: 10px" class="selection" [(ngModel)]="sort_by" (ngModelChange)="sortData()" isSearchable="true">
+          <sui-select-option *ngFor="let colname of col_name" [value]="colname">
+          </sui-select-option>
+        </sui-select>
+        <div class="ui large label" style="margin-left: 10px">เรียงลำดับจาก</div>
+        <sui-select style="margin: 10px" class="selection" [(ngModel)]="sort_with" (ngModelChange)="sortData()" isSearchable="true">
+          <sui-select-option *ngFor="let colname of sort_map" [value]="colname">
+          </sui-select-option>
+        </sui-select>
+      </a>
+    </div>
+  </div>
+  <div class="ui segments">
+    <div style="margin:10px">
+      <sui-search [options]="areas_for_search" (resultSelected)="onSearchSelected($event)"></sui-search>
+    </div>
+    <div id="container">
+      <table class="ui celled striped table">
+        <thead>
+          <tr>
+            <th>
+              <sui-checkbox [(ngModel)]="checked_map['0']" (checkChange)="checkAll()"></sui-checkbox> All
+            </th>
+            <th>
+              รหัสภาค
+            </th>
+            <th>
+              ชื่อภาค
+            </th>
+            <th>
+              รหัสจังหวัด
+            </th>
+            <th>
+              ชื่อจังหวัด
+            </th>
+            <th>
+              รหัสอำเภอ
+            </th>
+            <th>
+              ชื่ออำเภอ
+            </th>
+            <th>
+              รหัสตำบล
+            </th>
+            <th>
+              ชื่อตำบล
+            </th>
+            <th>
+              เขตการปกครอง
+            </th>
+            <th>
+              รหัสเทศบาล
+            </th>
+            <th>
+              ชื่อเทศบาล
+            </th>
+            <th>
+              รหัส อบต.
+            </th>
+            <th>
+              ชื่อ อบต.
+            </th>
+            <th>
+              รหัส EA
+            </th>
+            <th>
+              รหัสหมู่บ้าน
+            </th>
+            <th>
+              ชื่อหมู่บ้าน
+            </th>
+            <th>
+              แผนที่
+            </th>
+            <th>
+              จำนวนบ้าน
+            </th>
+            <th>
+              จำนวนครัวเรือน
+            </th>
+            <th>
+              จำนวนครัวเรือนเกษตร
+            </th>
+            <th>
+              จำนวนสถานประกอบการธุรกิจทางการค้าและธุรกิจทางการบริการ
+            </th>
+            <th>
+              จำนวนสถานประกอบการอุสาหกรรมการผลิต
+            </th>
+            <th>
+              จำนวนโรงแรมและเกสต์เฮาส์
+            </th>
+            <th>
+              จำนวนโรงพยาบาลเอกชน
+            </th>
+            <th>
+              หมายเหตุ
+            </th>
+            <th>
+              แก้ไข
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <ng-container *ngFor="let ea of ea_list">
+            <tr>
+              <td>
+                <sui-checkbox [(ngModel)]="checked_map[ea.REG+ea.CWT+ea.AMP+ea.TAM+ea.DISTRICT+ea.EA]"></sui-checkbox>
+              </td>
+              <td>
+                <p suiPopup popupText="รหัสภาค">{{ea.REG}}</p>
+              </td>
+              <td>
+                <p suiPopup popupText="ชื่อภาค">{{ea.REG_NAME}}</p>
+              </td>
+              <td>
+                <p suiPopup popupText="รหัสจังหวัด">{{ea.CWT}}</p>
+              </td>
+              <td>
+                <p suiPopup popupText="ชื่อจังหวัด">{{ea.CWT_NAME}}</p>
+              </td>
+              <td>
+                <p suiPopup popupText="รหัสอำเภอ">{{ea.AMP}}</p>
+              </td>
+              <td>
+                <p suiPopup popupText="ชื่ออำเภอ">{{ea.AMP_NAME}}</p>
+              </td>
+              <td>
+                <p suiPopup popupText="รหัสตำบล">{{ea.TAM}}</p>
+              </td>
+              <td>
+                <p suiPopup popupText="ชื่อตำบล">{{ea.TAM_NAME}}</p>
+              </td>
+              <td>
+                <p suiPopup popupText="เขตการปกครอง">{{ea.DISTRICT}}</p>
+              </td>
+              <td>
+                <p suiPopup popupText="รหัสเทศบาล">{{ea.MUN}}</p>
+              </td>
+              <td>
+                <p suiPopup popupText="ชื่อเทศบาล">{{ea.MUN_NAME}}</p>
+              </td>
+              <td>
+                <p suiPopup popupText="รหัส อบต.">{{ea.TAO}}</p>
+              </td>
+              <td>
+                <p suiPopup popupText="ชื่อ อบต.">{{ea.TAO_NAME}}</p>
+              </td>
+              <td>
+                <p suiPopup popupText="รหัส EA">{{ea.EA}}</p>
+              </td>
+              <td>
+                <p suiPopup popupText="รหัสหมู่บ้าน">{{ea.VIL}}</p>
+              </td>
+              <td>
+                <p suiPopup popupText="ชื่อหมู่บ้าน">{{ea.VIL_NAME}}</p>
+              </td>
+              <td>
+                <p suiPopup popupText="แผนที่">{{ea.MAP_STATUS}}</p>
+              </td>
+              <td>
+                <p suiPopup popupText="จำนวนบ้าน">{{ea.Building}}</p>
+              </td>
+              <td>
+                <p suiPopup popupText="จำนวนครัวเรือน">{{ea.Household}}</p>
+              </td>
+              <td>
+                <p suiPopup popupText="จำนวนครัวเรือนเกษตร">{{ea.Agricultural_HH}}</p>
+              </td>
+              <td>
+                <p suiPopup popupText="จำนวนสถานประกอบการธุรกิจทางการค้าและธุรกิจทางการบริการ">{{ea.ES_BUSI}}</p>
+              </td>
+              <td>
+                <p suiPopup popupText="จำนวนสถานประกอบการอุสาหกรรมการผลิต">{{ea.ES_INDUS}}</p>
+              </td>
+              <td>
+                <p suiPopup popupText="จำนวนโรงแรมและเกสต์เฮาส์">{{ea.ES_HOTEL}}</p>
+              </td>
+              <td>
+                <p suiPopup popupText="จำนวนโรงพยาบาลเอกชน">{{ea.ES_PV_HOS}}</p>
+              </td>
+              <td>
+                <p suiPopup popupText="หมายเหตุ">{{ea.REMARK}}</p>
+              </td>
+              <td>
+                <button class="ui icon button" (click)="editEa(ea)">
+                  <i style="font-size:18px;" class="material-icons">create</i>
+                </button>
+              </td>
+            </tr>
+          </ng-container>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="ui segment">
+    <sui-pagination [collectionSize]="filter_areas.areas.length" [pageSize]="50" [maxSize]="10" [hasEllipses]="true" [(page)]="page"
+      (pageChange)="showPage()">
+    </sui-pagination>
+  </div>
+</ng-container>
+<ng-container *ngIf="filter_areas.areas == null">
+  ไม่มีข้อมูลเขตแจงนับ
+</ng-container>
+<sui-modal [isClosable]="true" *ngIf="deleted" (dismissed)="deleted = false" #modal>
+  <div class="header">ลบ</div>
+  <div class="content">
+      ต้องการลบเขตพื้นที่แจงนับหรือไม่
+  </div>
+  <div class="actions">
+      <button class="ui red button" (click)="deleteEa()" autofocus>ลบ</button>
+      <button class="ui basic button" (click)="modal.deny()" autofocus>ยกเลิก</button>
+  </div>
+</sui-modal>

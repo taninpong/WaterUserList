@@ -1,0 +1,11 @@
+#container {
+    overflow-x: auto;
+    overflow-y: auto;
+}
+#circularbutton{
+    font-size:1px;
+}
+#removeicon{
+    font-size:20px;
+    color:red;
+}

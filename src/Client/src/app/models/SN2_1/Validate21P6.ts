@@ -1,0 +1,23 @@
+export class Validate21P6 {
+    A6_1:boolean;
+    A6_2_1_1:boolean;
+    A6_2_1_2:boolean;
+    A6_2_1_3:boolean;
+    A6_2_1_4:boolean;
+    A6_2_2_1:boolean;
+    A6_2_2_2:boolean;
+    A6_2_2_3:boolean;
+    A6_2_2_4:boolean;
+    A6_2_3_1:boolean;
+    A6_2_3_2:boolean;
+    A6_2_3_3:boolean;
+    A6_2_3_4:boolean;
+    A6_2_4_1:boolean;
+    A6_2_4_2:boolean;
+    A6_2_4_3:boolean;
+    A6_2_4_4:boolean;
+    A6_2_5_1:boolean;
+    A6_2_5_2:boolean;
+    A6_2_5_3:boolean;
+    A6_2_5_4:boolean;
+}

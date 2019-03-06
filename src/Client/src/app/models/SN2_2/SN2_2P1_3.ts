@@ -1,0 +1,20 @@
+export class SN2_2P1_3 {
+    B1_3_1:string;
+    B1_3_2_1:boolean;
+    B1_3_2_2:boolean;
+    B1_3_2_3:boolean;
+    B1_3_2_4:boolean;
+    B1_3_2_5:boolean;
+    B1_3_2_5_1:string;
+    B1_3_3:string;
+    B1_3_3_1:number;
+    B1_3_3_2_1:number;
+    B1_3_3_2_2:number;
+    B1_3_3_2_3:number;
+    B1_3_3_2_4:number;
+    B1_3_3_3_1_1:number;
+    B1_3_3_3_1_2:number;
+    B1_3_3_3_1_3:number;
+    B1_3_3_3_2_1:number;
+    B1_3_3_3_2_2:number;
+}

@@ -1,0 +1,28 @@
+export class SN2_1P5_7 {
+    A5_7_1_1_1:number;
+    A5_7_1_1_2:number;
+    A5_7_1_1_3:number;
+    A5_7_1_1_4:number;
+    A5_7_1_1_5:number;
+    A5_7_1_2_1:number;
+    A5_7_1_2_2:number;
+    A5_7_1_2_3:number;
+    A5_7_1_2_4:number;
+    A5_7_1_2_5:number;
+    A5_7_1_3_1:number;
+    A5_7_1_3_2:number;
+    A5_7_1_3_3:number;
+    A5_7_1_3_4:number;
+    A5_7_1_3_5:number;
+    A5_7_1_4_1:number;
+    A5_7_1_4_2:number;
+    A5_7_1_4_3:number;
+    A5_7_1_4_4:number;
+    A5_7_1_4_5:number;
+    A5_7_1_5:string;
+    A5_7_1_5_1:number;
+    A5_7_1_5_2:number;
+    A5_7_1_5_3:number;
+    A5_7_1_5_4:number;
+    A5_7_1_5_5:number;
+}

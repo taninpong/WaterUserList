@@ -1,0 +1,36 @@
+<h3 class="ui header">อัพโหลดข้อมูล Tablet</h3>
+<div class="ui segments">
+    <!-- <sui-dimmer class="inverted" [isClickable]="false" [(isDimmed)]="segmentDimmed">
+        <div class="ui text loader">Uploading...</div>
+     </sui-dimmer> -->
+    <div class="ui segments">
+        <div class="ui raised segment">
+          <a class="ui black ribbon label">ไฟล์ข้อมูล Tablet</a>
+          <input name="file_img" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" type="file" style="margin: 10px" #file class="form-control"> 
+          <button class="ui green button" (click)="exportToExcel()" autofocus>ดาวน์โหลดไฟล์ข้อมูลตัวอย่าง</button>
+        </div>
+        <div *ngIf="maximum_progress">
+            <sui-progress class="bottom attached indicating active" [maximum]="maximum_progress" [value]="value"></sui-progress>
+        </div>
+    </div>
+    <div style="margin:10px" >
+        <button class="ui primary button" [disabled]="segmentDimmed" (click)="uploadData(file.files)" >
+          อัพโหลด
+        </button>
+        <button class="ui button" (click)="backClicked()">
+          ย้อนกลับ
+        </button>
+    </div>
+</div>
+<div *ngIf="modal_message !== ''">
+  <sui-modal [isClosable]="true" #modal>
+      <div class="header">{{modal_title}}</div>
+      <div class="content">
+          <h4>{{modal_message}}</h4>
+      </div>
+      <div class="actions">
+          <button class="ui primary button" (click)="modal.approve('done'); backClicked()" autofocus>OK</button>
+      </div>
+  </sui-modal>
+</div>
+
