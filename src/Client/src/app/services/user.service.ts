@@ -11,7 +11,7 @@ export class UserService {
   url = 'http://35.231.173.183:8080';
 
   getAllUserData() {
-    let userdata: Promise<any> = axios.get(this.url + "/user").then(response => response.data).catch(error => console.log(error));
+    let userdata: Promise<any> = axios.get("http://nsogroup1.azurewebsites.net" + "/user").then(response => response.data).catch(error => console.log(error));
     return userdata;
   }
 
