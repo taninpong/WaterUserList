@@ -31,5 +31,12 @@ namespace Water_UserList.Controllers
             var result = UserCollection.Find(it => true).ToList();
             return result;
         }
+
+        [HttpGet]
+        public ActionResult<IEnumerable<User>> userlower_role_area(string TID, string CWT)
+        {
+            var result = UserCollection.Find(it => it.CWT == CWT && it.TID == TID).ToList();
+            return result;
+        }
     }
 }
